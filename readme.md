@@ -50,12 +50,12 @@ different records at the same time.
 http://stackoverflow.com/questions/19541582/storing-and-retrieving-arraylist-values-from-hashmap
 
 #Test Cases
-* Test creating, editing and counting records
-** Case 1: 
-** Case 2: 
-* Test FIFO
-** Case 1: 
-** Case 2:
-* Test server leader election
-** Case 1:
-** Case 2:
+# Test creating, editing and counting records
+## Case 1: 
+## Case 2: 
+# Test FIFO
+## Case 1: 
+## Case 2:
+# Test server leader election
+## Case 1:
+## Case 2:
