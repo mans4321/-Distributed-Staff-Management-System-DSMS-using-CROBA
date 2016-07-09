@@ -2,17 +2,18 @@
 
 * 3 clinics
 * 3 servers (ClinicServer)
-** servers will maintain records
-** 2 types of records: Nurse and Doctors
-** records have unique IDs ex
-*** DR10000 NR29299 (NR/DR [0-9]5*)
+  * servers will maintain records
+  * 2 types of records: Nurse and Doctors
+  * records have unique IDs ex
+    * DR10000 NR29299 (NR/DR [0-9]5*)
+
 ## DoctorRecord contains the following fields:
-• First name
-• Last name
-• Address
-• Phone
-• Specialization (e.g. surgeon, orthopaedic, etc)
-• Location (mtl, lvl, ddo)
+* First name
+* Last name
+* Address
+* Phone
+* Specialization (e.g. surgeon, orthopaedic, etc)
+* Location (mtl, lvl, ddo)
 
 ## A NurseRecord contains the following fields:
 • First name
@@ -34,14 +35,14 @@
 
 ## System
 * createDRecord (firstName, lastName, address, phone, specialization, location)
-** server returns if success
+  * server returns if success
 * createNRecord (firstName, lastName, designation, status, statusDate)
-** same
+  * same
 * getRecordCounts (recordType)
-** using UDP/IP gets the number of records from each clinic
+  * using UDP/IP gets the number of records from each clinic
 * editRecord (recordID, fieldName, newValue)
-** edits based on id and returns success/fail message. 
-** The fields that should be allowed to change are address, phone and location (for DoctorRecord), and designation, status and status date (for NurseRecord).
+  * edits based on id and returns success/fail message. 
+  * The fields that should be allowed to change are address, phone and location (for DoctorRecord), and designation, status and status date (for NurseRecord).
 
 #Implementation
 You should design the ClinicServer maximizing concurrency. In other words, use proper
@@ -52,11 +53,11 @@ http://stackoverflow.com/questions/19541582/storing-and-retrieving-arraylist-val
 #Test Cases
 
 * Test - creating, editing and counting records
-** Case 1: 
-** Case 2: 
+  * Case 1: 
+  * Case 2: 
 * Test - FIFO
-** Case 1: 
-** Case 2:
+  * Case 1: 
+  * Case 2:
 * Test - server leader election
-** Case 1:
-** Case 2:
+  * Case 1:
+  * Case 2:
