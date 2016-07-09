@@ -43,8 +43,14 @@
 ** edits based on id and returns success/fail message. 
 ** The fields that should be allowed to change are address, phone and location (for DoctorRecord), and designation, status and status date (for NurseRecord).
 
-#implementation
+#Implementation
 You should design the ClinicServer maximizing concurrency. In other words, use proper
-synchronization that allows multiple police manager to perform operations for the same or
+synchronization that allows multiple clinic manager to perform operations for the same or
 different records at the same time.
 http://stackoverflow.com/questions/19541582/storing-and-retrieving-arraylist-values-from-hashmap
+
+#Test Cases
+* Test creating, editing and counting records
+* Test FIFO
+* Test server leader election
+
