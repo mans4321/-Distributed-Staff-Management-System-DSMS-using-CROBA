@@ -51,12 +51,12 @@ http://stackoverflow.com/questions/19541582/storing-and-retrieving-arraylist-val
 
 #Test Cases
 
-* Test creating, editing and counting records
-**# Case 1: 
+* Test - creating, editing and counting records
+** Case 1: 
 ** Case 2: 
-* Test FIFO
+* Test - FIFO
 ** Case 1: 
 ** Case 2:
-* Test server leader election
+* Test - server leader election
 ** Case 1:
 ** Case 2:
