@@ -1,0 +1,25 @@
+
+
+module RemotInterfaceApp{
+
+	interface RemotInterface{
+
+	string createDRecord( in string managerId , in string firstName , in string lastName , in string address ,
+	 					 in string phone , in string specialization, in string location );
+
+
+
+	string createNRecord(in string managerId , in string firstName , in string lastName, in string designation,
+						 in string status , in string statusDate );
+						 
+	
+	string getRecordCount(in string managerId , in long recordType);
+
+	
+	string editRecord(in string managerId, in string recordID, in string fieldName, in string newValue);
+	
+	
+	string transferRecord(in string managerID , in string recordID , in string remoteClinicServerName);
+
+};
+};
