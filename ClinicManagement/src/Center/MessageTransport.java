@@ -3,7 +3,7 @@ package Center;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import udp.SendDoOperationMessage;
+import udp.SendingOperationMessage;
 import udp.ClientOperationMessage;
 
 public class MessageTransport {
@@ -50,7 +50,7 @@ public class MessageTransport {
 	public String sendToManager(Message message){
 		messages.add(message);
 		
-		SendDoOperationMessage manager = new SendDoOperationMessage(managerPort , message);
+		SendingOperationMessage manager = new SendingOperationMessage(managerPort , message);
 		manager.start();
 		try {
 			manager.join();
@@ -79,7 +79,7 @@ public class MessageTransport {
 	
 	
 	private void sendToBackup1(Message message){
-		SendDoOperationMessage backup1 = new SendDoOperationMessage(backupPort1, message);
+		SendingOperationMessage backup1 = new SendingOperationMessage(backupPort1, message);
 		backup1.start();
 		try {
 			backup1.join();
@@ -95,7 +95,7 @@ public class MessageTransport {
 
 	private void sendToBackup2(Message message){
 		
-		SendDoOperationMessage backup2 = new SendDoOperationMessage(backupPort2, message);
+		SendingOperationMessage backup2 = new SendingOperationMessage(backupPort2, message);
 		backup2.start();
 		try {
 			backup2.join();

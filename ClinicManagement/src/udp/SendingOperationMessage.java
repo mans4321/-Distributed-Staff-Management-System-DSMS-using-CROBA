@@ -11,12 +11,12 @@ import java.util.concurrent.Callable;
 
 import Center.Message;
 
-public class SendDoOperationMessage extends Thread {
+public class SendingOperationMessage extends Thread {
 
 	private int port;
 	private Message message;
 	private String resultResponse;
-	public SendDoOperationMessage(int port , Message message){
+	public SendingOperationMessage(int port , Message message){
 		this.port =port;
 		this.message = message;
 	}

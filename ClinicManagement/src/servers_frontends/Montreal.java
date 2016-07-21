@@ -36,27 +36,27 @@ public class Montreal implements ServerOperations {
     private int listenOnPort;
     private int front1Port;
     
-    public Montreal (int priority )
+    public Montreal (int processID )
     {
-        this.serverName = "Montreal" + priority ;
+        this.serverName = "Montreal" + processID ;
         this.database = new RecordManager();
         this.logger = new RmiLogger(serverName, "server");
         this.database = new RecordManager();
         this.logger = new RmiLogger(serverName, "server");
       
-        initializeVaules(priority);
+        initializeVaules(processID);
 
-        if(priority == 1){
+        if(processID == 1){
         	this.manager = true;
         	startUdpForLeaderServer();
         }
     }
     
-    private void initializeVaules(int priority){
+    private void initializeVaules(int processID){
    	 
     	 getInfo = new AllServersInfo("MTL");
     	 
-   	 switch(priority){
+   	 switch(processID){
    	 
    	 	case 1 :
    	 		server1 = getInfo.getServer2();
@@ -77,7 +77,7 @@ public class Montreal implements ServerOperations {
    	 
    	 	sendMessage = new MessageTransport(server1.getPort(), 
    	 										server2.getPort());
-   	 	pingServers = new PingServers(server1, server2 , getInfo.getAllserver() , this, priority);
+   	 	pingServers = new PingServers(server1, server2 , getInfo.getAllserver() , this, processID);
    	 	messageCenter = new MessagesCenter(manager, front1Port,
    	 											listenOnPort, this );
     }

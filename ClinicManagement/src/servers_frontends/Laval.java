@@ -37,27 +37,27 @@ public class Laval implements ServerOperations {
     private int front1Port;
     
     
-    public Laval (int priority)
+    public Laval (int processID)
     {
-    	 this.serverName = "Laval" + priority ;
+    	 this.serverName = "Laval" + processID ;
         this.database = new RecordManager();
         this.logger = new RmiLogger(serverName, "server");
         this.database = new RecordManager();
         this.logger = new RmiLogger(serverName, "server");
 
-        initializeVaules(priority);
+        initializeVaules(processID);
         
-        if(priority == 1){
+        if(processID == 1){
         	this.manager = true;
         	startUdpForLeaderServer();
         }
     }
     
-    private void initializeVaules(int priority){
+    private void initializeVaules(int processID){
     	
    	 getInfo = new AllServersInfo("LVL");
    	 
-   	 switch(priority){
+   	 switch(processID){
    	 
    	 	case 1 :
    	 		server1 = getInfo.getServer2();
@@ -82,7 +82,7 @@ public class Laval implements ServerOperations {
 
      pingServers = new PingServers(server1, server2 , 
     		 getInfo.getAllserver() ,
-			this, priority);
+			this, processID);
 
      messageCenter = new MessagesCenter(manager, front1Port,
 				listenOnPort, this );

@@ -36,24 +36,24 @@ public class Dollard implements ServerOperations {
 	    private int listenOnPort;
 	    private int front1Port;
 	    
-	    public Dollard (int priority )
+	    public Dollard (int processID )
 	    {
-	        this.serverName = "Dollard" + priority;
+	        this.serverName = "Dollard" + processID;
 	        this.database = new RecordManager();
 	        this.logger = new RmiLogger(serverName, "server");
-	        if(priority == 1){
+	        if(processID == 1){
 	        	this.manager = true;
 	        	startUdpForLeaderServer();
 	        }
-	        initializeVaules(priority);
+	        initializeVaules(processID);
 	    }
 	    
 	    
-	    private void initializeVaules(int priority){
+	    private void initializeVaules(int processID){
 	    	 
 	        getInfo = new AllServersInfo("DDO");
 	        
-	    	 switch(priority){
+	    	 switch(processID){
 	    	 
 	    	 case 1 :
 	    		 server1 = getInfo.getServer2();
@@ -75,9 +75,9 @@ public class Dollard implements ServerOperations {
 		        sendMessage = new MessageTransport(server1.getPort(), 
 		        									server2.getPort());
 		        
-		        pingServers = new PingServers(server1, server2 , 
+		        pingServers = new PingServers(server1 , server2 , 
 		        								getInfo.getAllserver() ,
-		        								this, priority);
+		        								this, processID);
 		        
 		        messageCenter = new MessagesCenter(manager, front1Port,
 		        									listenOnPort, this );

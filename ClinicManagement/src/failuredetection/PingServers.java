@@ -7,7 +7,7 @@ import java.util.TimerTask;
 import Center.ServerOperations;
 import Center.Message;
 import Center.ServerInfo;
-import udp.SendDoOperationMessage;
+import udp.SendingOperationMessage;
 
 public class PingServers {
 	
@@ -15,15 +15,15 @@ public class PingServers {
 	private ServerInfo server2info;
 	private ArrayList<ServerInfo> allServers;
 	private ServerOperations thisServer;
-	private int priority; 
+	private int processID; 
 
 	public PingServers(ServerInfo server1info , ServerInfo server2info , 
-			ArrayList<ServerInfo> allServers, ServerOperations thisServer, int priority ){
+			ArrayList<ServerInfo> allServers, ServerOperations thisServer, int processID ){
 		this.server1info = server1info;
 		this.server2info = server2info; 
 		this.allServers =  allServers;
 		this.thisServer = thisServer;
-		this.priority = priority;
+		this.processID = processID;
 		statTimer();
 	}
 
@@ -51,7 +51,7 @@ public class PingServers {
 	}
 	
 	private void checkServeOne(){
-		SendDoOperationMessage pingMessage = new SendDoOperationMessage(server1info.getPort(), new Message());
+		SendingOperationMessage pingMessage = new SendingOperationMessage(server1info.getPort(), new Message());
 		pingMessage.start();
 		
 		try {
@@ -62,14 +62,14 @@ public class PingServers {
 		
 		if(pingMessage.getResultResponse().trim().equalsIgnoreCase("noResponse")){
 			  if(server1info.isLeader()){
-				  new BullyAlgorithm(priority, allServers ,thisServer );
+				  new BullyAlgorithm(processID, allServers ,thisServer );
 			  }
 			  	server1info.setStillWorking(false);
 		}
 	}
 	
 	private void checkServerTwo(){
-		SendDoOperationMessage pingMessage = new SendDoOperationMessage(server2info.getPort(),new Message());
+		SendingOperationMessage pingMessage = new SendingOperationMessage(server2info.getPort(),new Message());
 		pingMessage.start();
 		
 		try {
@@ -80,7 +80,7 @@ public class PingServers {
 		
 		if(pingMessage.getResultResponse().trim().equalsIgnoreCase("noResponse")){
 			  if(server1info.isLeader()){
-				  new BullyAlgorithm(priority , allServers , thisServer ); 
+				  new BullyAlgorithm(processID , allServers , thisServer ); 
 			  }
 			  server2info.setStillWorking(false);
 		}
