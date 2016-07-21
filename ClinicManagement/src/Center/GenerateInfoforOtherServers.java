@@ -1,5 +1,7 @@
 package Center;
 
+import java.util.ArrayList;
+
 public class GenerateInfoforOtherServers {
 
 	
@@ -7,6 +9,7 @@ public class GenerateInfoforOtherServers {
 	ServersInfo server2;
 	ServersInfo server3;
 	ServersInfo frontEnd;
+	ArrayList<ServersInfo> allServers;
 	
 	public GenerateInfoforOtherServers(String server){
 		generateInfoforOtherServers(server);
@@ -52,5 +55,13 @@ public class GenerateInfoforOtherServers {
 		return frontEnd;
 	}
 	
+	public ArrayList<ServersInfo> getAllserver(){
+		allServers = new ArrayList<ServersInfo>();
+		allServers.add(server1);
+		allServers.add(server2);
+		allServers.add(server3);
+		return allServers;
+		
+	}
 	
 }

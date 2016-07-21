@@ -22,37 +22,30 @@ public class Dollard implements ApplyOperations {
 	    private final String serverName;
 	    private boolean manager;
 	    private MessageTransport sendMessage;
-	    private MessagesCenter reliableFIFO;
+	    private MessagesCenter messageCenter;
 	    private PingServers pingServers;
 	    private ServersInfo server1;
 	    private ServersInfo server2;
 	    private int listenOnPort;
 	    private int front1Port;
+	    
 	    public Dollard (int priority )
 	    {
-	        if(priority == 1){
-	        	this.manager = true;
-	        }
-	        
 	        this.serverName = "Dollard" + priority;
 	        this.database = new RecordManager();
 	        this.logger = new RmiLogger(serverName, "server");
-	        getInfo = new GenerateInfoforOtherServers("DDO");
-	        initializeVaules(priority);
-	        sendMessage = new MessageTransport(server1.getPort(), 
-	        		server2.getPort());
-	        pingServers = new PingServers(server1, server2 ,this, priority);
-	        reliableFIFO = new MessagesCenter(manager, front1Port,
-	        		listenOnPort, this );
-	        
-	        if(manager){
+	        if(priority == 1){
+	        	this.manager = true;
 	        	startUdpForLeaderServer();
 	        }
+	        initializeVaules(priority);
 	    }
 	    
 	    
 	    private void initializeVaules(int priority){
 	    	 
+	        getInfo = new GenerateInfoforOtherServers("DDO");
+	        
 	    	 switch(priority){
 	    	 
 	    	 case 1 :
@@ -72,7 +65,17 @@ public class Dollard implements ApplyOperations {
 	    		 front1Port = getInfo.getServer1().getPort();
 	    	 }
 	    	 
+		        sendMessage = new MessageTransport(server1.getPort(), 
+		        									server2.getPort());
+		        
+		        pingServers = new PingServers(server1, server2 , 
+		        								getInfo.allServers ,
+		        								this, priority);
+		        
+		        messageCenter = new MessagesCenter(manager, front1Port,
+		        									listenOnPort, this );
 	    }
+	    
 		public String createDRecord (
 				String managerID,
 				String firstName, 
@@ -183,10 +186,10 @@ public class Dollard implements ApplyOperations {
 			
 			if(manager){
 				startUdpForLeaderServer();
-				reliableFIFO.managerHasChanged(manager, front1Port);
+				messageCenter.managerHasChanged(manager, front1Port);
 			}else{
 				pingServers.newLeader(port);
-				reliableFIFO.managerHasChanged(manager, port);
+				messageCenter.managerHasChanged(manager, port);
 			}
 		}
 		
@@ -202,7 +205,6 @@ public class Dollard implements ApplyOperations {
 //----------------------------------------------(RunCROBAobject)-------------------------------------------------------------------------
 
 		public static void main(String [] args){
-			
-			
+			new Dollard(1);
 		}
 }

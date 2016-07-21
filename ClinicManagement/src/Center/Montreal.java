@@ -23,7 +23,7 @@ public class Montreal implements ApplyOperations {
     private final String serverName;
     private boolean manager;
     private MessageTransport sendMessage;
-    private MessagesCenter reliableFIFO;
+    private MessagesCenter messageCenter;
     private PingServers pingServers;
     private ServersInfo server1;
     private ServersInfo server2;
@@ -37,44 +37,43 @@ public class Montreal implements ApplyOperations {
         this.logger = new RmiLogger(serverName, "server");
         this.database = new RecordManager();
         this.logger = new RmiLogger(serverName, "server");
-        getInfo = new GenerateInfoforOtherServers("MTL");
+      
         initializeVaules(priority);
-        sendMessage = new MessageTransport(server1.getPort(), 
-        		server2.getPort());
-        pingServers = new PingServers(server1, server2 ,this, priority);
-        reliableFIFO = new MessagesCenter(manager, front1Port,
-        		listenOnPort, this );
-        
+
         if(priority == 1){
         	this.manager = true;
-        }
-        
-        if(manager){
         	startUdpForLeaderServer();
         }
     }
     
     private void initializeVaules(int priority){
    	 
+    	 getInfo = new GenerateInfoforOtherServers("MTL");
+    	 
    	 switch(priority){
    	 
-   	 case 1 :
-   		 server1 = getInfo.getServer2();
-   		 server2 =  getInfo.getServer3();
-   		 listenOnPort = getInfo.getServer1().getPort();
-   		 front1Port = getInfo.getFrontEnd().getPort();
-   	 case 2 :
-   		 server1 = getInfo.getServer1();
-   		 server2 =  getInfo.getServer3();
-   		 listenOnPort = getInfo.getServer2().getPort();
-   		 front1Port = getInfo.getServer1().getPort();
-   	 case 3 :
-   		 server1 = getInfo.getServer1();
-   		 server2 =  getInfo.getServer2();
-   		 listenOnPort = getInfo.getServer3().getPort();
-   		 front1Port = getInfo.getServer1().getPort();
+   	 	case 1 :
+   	 		server1 = getInfo.getServer2();
+	   		 server2 =  getInfo.getServer3();
+	   		 listenOnPort = getInfo.getServer1().getPort();
+	   		 front1Port = getInfo.getFrontEnd().getPort();
+   	 	case 2 :
+	   		 server1 = getInfo.getServer1();
+	   		 server2 =  getInfo.getServer3();
+	   		 listenOnPort = getInfo.getServer2().getPort();
+	   		 front1Port = getInfo.getServer1().getPort();
+   	 	case 3 :
+	   		 server1 = getInfo.getServer1();
+	   		 server2 =  getInfo.getServer2();
+	   		 listenOnPort = getInfo.getServer3().getPort();
+	   		 front1Port = getInfo.getServer1().getPort();
    	 }
    	 
+   	 	sendMessage = new MessageTransport(server1.getPort(), 
+   	 										server2.getPort());
+   	 	pingServers = new PingServers(server1, server2 , getInfo.getAllserver() , this, priority);
+   	 	messageCenter = new MessagesCenter(manager, front1Port,
+   	 											listenOnPort, this );
     }
     
     public String createDRecord (
@@ -185,10 +184,10 @@ public class Montreal implements ApplyOperations {
 		
 		if(manager){
 			startUdpForLeaderServer();
-			reliableFIFO.managerHasChanged(manager, front1Port);
+			messageCenter.managerHasChanged(manager, front1Port);
 		}else{
 			pingServers.newLeader(port);
-			reliableFIFO.managerHasChanged(manager, port);
+			messageCenter.managerHasChanged(manager, port);
 		}
 	}
 	public RecordManager getDatabase() {

@@ -1,5 +1,6 @@
 package failuredetectionSubSystem;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -12,13 +13,16 @@ public class PingServers {
 	
 	private ServersInfo server1info;
 	private ServersInfo server2info;
+	private ArrayList<ServersInfo> allServers;
 	private ApplyOperations thisServer;
 
 	public PingServers(ServersInfo server1info , ServersInfo server2info , 
-			ApplyOperations thisServer, int priority ){
+			ArrayList<ServersInfo> allServers, ApplyOperations thisServer, int priority ){
 		this.server1info = server1info;
 		this.server2info = server2info; 
+		this.allServers =  allServers;
 		this.thisServer = thisServer;
+		
 		statTimer();
 	}
 

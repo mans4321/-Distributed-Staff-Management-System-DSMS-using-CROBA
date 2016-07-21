@@ -23,6 +23,6 @@ public class BullyAlgorithm {
 	}
 	
 	private void electMyselfAsLeader(){
-		thisServer.leaderChanged(true , 0000000 );
+		thisServer.leaderChanged(true , 0 );
 	}
 }
