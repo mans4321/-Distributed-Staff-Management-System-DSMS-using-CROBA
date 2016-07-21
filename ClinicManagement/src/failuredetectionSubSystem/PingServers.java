@@ -15,6 +15,7 @@ public class PingServers {
 	private ServersInfo server2info;
 	private ArrayList<ServersInfo> allServers;
 	private ApplyOperations thisServer;
+	private int priority; 
 
 	public PingServers(ServersInfo server1info , ServersInfo server2info , 
 			ArrayList<ServersInfo> allServers, ApplyOperations thisServer, int priority ){
@@ -22,7 +23,7 @@ public class PingServers {
 		this.server2info = server2info; 
 		this.allServers =  allServers;
 		this.thisServer = thisServer;
-		
+		this.priority = priority;
 		statTimer();
 	}
 
@@ -61,7 +62,7 @@ public class PingServers {
 		
 		if(pingMessage.getResultResponse().trim().equalsIgnoreCase("noResponse")){
 			  if(server1info.isLeader()){
-				  new BullyAlgorithm(server1info , server2info ,thisServer );
+				  new BullyAlgorithm(priority, allServers ,thisServer );
 			  }
 			  	server1info.setStillWorking(false);
 		}
@@ -79,7 +80,7 @@ public class PingServers {
 		
 		if(pingMessage.getResultResponse().trim().equalsIgnoreCase("noResponse")){
 			  if(server1info.isLeader()){
-				  new BullyAlgorithm(server1info , server2info ,thisServer ); 
+				  new BullyAlgorithm(priority , allServers , thisServer ); 
 			  }
 			  server2info.setStillWorking(false);
 		}

@@ -1,22 +1,23 @@
 package failuredetectionSubSystem;
 
+import java.util.ArrayList;
+
 import Center.ApplyOperations;
 import Center.ServersInfo;
 
 public class BullyAlgorithm {
 
-	ServersInfo server1info;
-	ServersInfo server2info;
-	ApplyOperations thisServer;
-	
-	
-	public BullyAlgorithm (ServersInfo server1info , ServersInfo server2info , ApplyOperations thisServer){
-		this.server1info = server1info;
-		this.server1info = server1info;
+	private ArrayList<ServersInfo> allServers;
+	private ApplyOperations thisServer;
+	private int priority;
+
+	public BullyAlgorithm(int priority, ArrayList<ServersInfo> allServers, ApplyOperations thisServer) {
+		this.priority = priority;
+		this.allServers = allServers; 
 		this.thisServer = thisServer;
 		elect();
 	}
-	
+
 	private void elect(){
 		
 		
