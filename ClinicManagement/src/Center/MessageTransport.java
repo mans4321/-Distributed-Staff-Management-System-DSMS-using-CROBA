@@ -3,8 +3,8 @@ package Center;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import udp.MessageExchange.SendDoOperationMessage;
-import udp.MessageExchange.Send_Requst_Result;
+import udp.SendDoOperationMessage;
+import udp.ClientOperationMessage;
 
 public class MessageTransport {
 
@@ -109,7 +109,7 @@ public class MessageTransport {
 		
 	}
 	
-///-----------------------------------(Front End only )	----------------------------------------------------------------
+///-----------------------------------(used by Front End only )	----------------------------------------------------------------
 	
 	/**
 	 * this f() only used by the FE to receive lost messages request  & new Leader info
@@ -131,7 +131,7 @@ public class MessageTransport {
 			   Message message = copy.get(i);
 			   if(message.getSequenceNum() == missingSeqNum.getSequenceNum()){
 				   message.setSenderPort(missingSeqNum.getSenderPort());
-				   new Send_Requst_Result(message).start();
+				   new ClientOperationMessage(message).start();
 			   }
 		   }
 		 

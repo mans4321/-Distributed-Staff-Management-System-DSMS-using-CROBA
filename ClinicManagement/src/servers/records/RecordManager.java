@@ -3,7 +3,7 @@ package servers.records;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import udp.transferRecordUDP.TwoPhaseProtocolClient;
+import udp.TwoPhaseProtocolClient;
 import utilities.DealWithUndeletedRecord;
 
 

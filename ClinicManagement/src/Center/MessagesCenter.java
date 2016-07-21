@@ -1,17 +1,17 @@
 package Center;
 
-import FIFOSystem.FIFOMessages;
-import udp.MessageExchange.Send_Requst_Result;
-import udp.MessageExchange.WaitDoOperationMessage;
+import fifo.FIFOMessages;
+import udp.ClientOperationMessage;
+import udp.ServerOperationMessage;
 
 public class MessagesCenter {
 
 
-	private ApplyOperations server;
+	private ServerOperations server;
 	private int listenerPort;
 	private FIFOMessages fifo; 
 	
-	public MessagesCenter(boolean manager ,int listenerPort ,  int ManagerPort, ApplyOperations server){
+	public MessagesCenter(boolean manager ,int listenerPort ,  int ManagerPort, ServerOperations server){
 	       this.server = server;
 	       this.listenerPort = listenerPort;
 	       fifo = new FIFOMessages(manager,ManagerPort,server);
@@ -33,7 +33,7 @@ public class MessagesCenter {
 	   private void handle(Message message){
 		   
 		   if(message.isCheckAvailability()){
-			        new Send_Requst_Result(message);  
+			        new ClientOperationMessage(message);  
 		   	} else{
 		   		newLeaderMessage( false , message.getLeaderPort() );
 		   	}
@@ -57,6 +57,6 @@ public class MessagesCenter {
 	   }
 	   
 		private void activateListenerThread(){
-			new WaitDoOperationMessage(listenerPort, this).start();
+			new ServerOperationMessage(listenerPort, this).start();
 		}
 }

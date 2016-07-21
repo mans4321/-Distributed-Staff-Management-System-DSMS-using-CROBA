@@ -1,5 +1,9 @@
 package Center;
 
+import servers_frontends.Dollard;
+import servers_frontends.Laval;
+import servers_frontends.Montreal;
+
 public class Boot {
 
 	
