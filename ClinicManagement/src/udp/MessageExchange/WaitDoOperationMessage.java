@@ -5,18 +5,18 @@ import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-import FIFOsubsystem.Message;
-import FIFOsubsystem.ReliableFIFO;
-import FIFOsubsystem.SendMessage;
+import Center.Message;
+import Center.MessagesCenter;
+import Center.MessageTransport;
 
 public class WaitDoOperationMessage extends Thread{
 
 	private int port;
-	private ReliableFIFO reliableFIFO;
-	private SendMessage sendMessage;
+	private MessagesCenter reliableFIFO;
+	private MessageTransport sendMessage;
 	private boolean isFrontEnd;
 	
-	public WaitDoOperationMessage(int port , ReliableFIFO reliableFIFO){
+	public WaitDoOperationMessage(int port , MessagesCenter reliableFIFO){
 		this.port = port;
 		this.reliableFIFO = reliableFIFO;
 		isFrontEnd = false;
@@ -26,7 +26,7 @@ public class WaitDoOperationMessage extends Thread{
 	 * this only used by FE to receive lost messages request 
 	 * @param port
 	 */
-	public WaitDoOperationMessage(int port , SendMessage sendMessage ){
+	public WaitDoOperationMessage(int port , MessageTransport sendMessage ){
 		this.port = port;
 		this.sendMessage = sendMessage;
 		isFrontEnd = true;
@@ -52,7 +52,7 @@ public class WaitDoOperationMessage extends Thread{
 		             if(! isFrontEnd ){
 		             reliableFIFO.recieive(message); 
 		             }else{
-		            	 sendMessage.sendLostMessages(message);
+		            	 sendMessage.recieive(message);
 		             }
 		         }
 		      }catch(Exception e){

@@ -8,27 +8,27 @@ import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 
-import FIFOsubsystem.Message;
-import FIFOsubsystem.SendMessage;
+import Center.GenerateInfoforOtherServers;
+import Center.Message;
+import Center.MessageTransport;
 import RemotInterfaceApp.RemotInterfacePOA;
 import servers.records.RecordManager;
 import udp.CountUdp.UDPServerCount;
 import udp.MessageExchange.WaitDoOperationMessage;
-import udp.changeLeader.WaitForNewLeader;
+import udp.MessageExchange.WaitForNewLeader;
 import udp.transferRecordUDP.TowPhaseProtocolServer;
 import utilities.RmiLogger;
 
 public class LavalFrontEnd extends RemotInterfacePOA {
     
     private int sequenceNum;
-    private SendMessage sendMessage;
+    private MessageTransport sendMessage;
     
     public LavalFrontEnd ()
     {
-        this.sendMessage = new SendMessage();
-        sendMessage.setFrontEnd(true);
-        this.sendMessage.setManagerPort(40005 );
-        startUdpServer() ;
+    	GenerateInfoforOtherServers getInfo = new GenerateInfoforOtherServers("LVL");
+        this.sendMessage = new MessageTransport(getInfo.getServer1().getPort());
+        startUdpServer();
     }
 	public String createDRecord (
 			String managerID,

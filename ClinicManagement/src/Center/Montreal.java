@@ -1,4 +1,4 @@
-package servers;
+package Center;
 
 
 
@@ -7,10 +7,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import FIFOsubsystem.Message;
-import FIFOsubsystem.ReliableFIFO;
-import FIFOsubsystem.SendMessage;
-import failuredetectionSubSystem.PingServerInfo;
 import failuredetectionSubSystem.PingServers;
 import servers.records.Record;
 import servers.records.RecordManager;
@@ -19,31 +15,66 @@ import udp.CountUdp.UDPServerCount;
 import udp.transferRecordUDP.TowPhaseProtocolServer;
 import utilities.RmiLogger;
 
-public class Laval implements ApplyOperations {
-    
-    private RecordManager database;
+public class Montreal implements ApplyOperations {
+	private GenerateInfoforOtherServers getInfo;
+	private RecordManager database;
     private RmiLogger logger;
     private int sequenceNum = 1;
     private final String serverName;
     private boolean manager;
-    private SendMessage sendMessage;
-    private ReliableFIFO reliableFIFO;
+    private MessageTransport sendMessage;
+    private MessagesCenter reliableFIFO;
     private PingServers pingServers;
-    public Laval ()
+    private ServersInfo server1;
+    private ServersInfo server2;
+    private int listenOnPort;
+    private int front1Port;
+    
+    public Montreal (int priority )
     {
-        this.serverName = "lvl";
+        this.serverName = "Montreal" + priority ;
         this.database = new RecordManager();
         this.logger = new RmiLogger(serverName, "server");
-        sendMessage = new SendMessage();
-        sendMessage.setBackupPort1(40025);
-        sendMessage.setBackupPort2(40045);
-        // Failure  system 
-        pingServers = new PingServers(new PingServerInfo(false , 40026 ) , 
-        		new PingServerInfo(false , 40046 ), this, 40006, 40007);
-        this.manager = true;
-        this.reliableFIFO = new ReliableFIFO(manager , 40005  ,20032 , this);
-        if(manager)
+        this.database = new RecordManager();
+        this.logger = new RmiLogger(serverName, "server");
+        getInfo = new GenerateInfoforOtherServers("MTL");
+        initializeVaules(priority);
+        sendMessage = new MessageTransport(server1.getPort(), 
+        		server2.getPort());
+        pingServers = new PingServers(server1, server2 ,this, priority);
+        reliableFIFO = new MessagesCenter(manager, front1Port,
+        		listenOnPort, this );
+        
+        if(priority == 1){
+        	this.manager = true;
+        }
+        
+        if(manager){
         	startUdpForLeaderServer();
+        }
+    }
+    
+    private void initializeVaules(int priority){
+   	 
+   	 switch(priority){
+   	 
+   	 case 1 :
+   		 server1 = getInfo.getServer2();
+   		 server2 =  getInfo.getServer3();
+   		 listenOnPort = getInfo.getServer1().getPort();
+   		 front1Port = getInfo.getFrontEnd().getPort();
+   	 case 2 :
+   		 server1 = getInfo.getServer1();
+   		 server2 =  getInfo.getServer3();
+   		 listenOnPort = getInfo.getServer2().getPort();
+   		 front1Port = getInfo.getServer1().getPort();
+   	 case 3 :
+   		 server1 = getInfo.getServer1();
+   		 server2 =  getInfo.getServer2();
+   		 listenOnPort = getInfo.getServer3().getPort();
+   		 front1Port = getInfo.getServer1().getPort();
+   	 }
+   	 
     }
     
     public String createDRecord (
@@ -151,11 +182,15 @@ public class Laval implements ApplyOperations {
 	}
 	
 	public void leaderChanged(boolean manager , int port){
-		this.manager = manager;
-		reliableFIFO.managerHasChanged(manager, port);
-		startUdpForLeaderServer();
+		
+		if(manager){
+			startUdpForLeaderServer();
+			reliableFIFO.managerHasChanged(manager, front1Port);
+		}else{
+			pingServers.newLeader(port);
+			reliableFIFO.managerHasChanged(manager, port);
+		}
 	}
-	
 	public RecordManager getDatabase() {
 		return database;
 	}
@@ -165,8 +200,8 @@ public class Laval implements ApplyOperations {
 		sequenceNum = sequenceNum++;
 		return num;
 	}
-
+    
     public static void main(String []args){
-           		Laval laval = new Laval();
+    	Montreal montreal = new Montreal(1);
+    	}
     }
-}

@@ -1,23 +1,28 @@
 package failuredetectionSubSystem;
 
-import servers.ApplyOperations;
+import Center.ApplyOperations;
+import Center.ServersInfo;
 
 public class BullyAlgorithm {
 
-	PingServerInfo server1info;
-	PingServerInfo server2info;
+	ServersInfo server1info;
+	ServersInfo server2info;
 	ApplyOperations thisServer;
 	
-	public BullyAlgorithm (PingServerInfo server1info , PingServerInfo server2info , ApplyOperations thisServer){
+	
+	public BullyAlgorithm (ServersInfo server1info , ServersInfo server2info , ApplyOperations thisServer){
 		this.server1info = server1info;
 		this.server1info = server1info;
 		this.thisServer = thisServer;
+		elect();
 	}
 	
+	private void elect(){
+		
+		
+	}
 	
-	////   apply BullyAlgorithm
-	
-	
-	
-	//  when u have to inform the backup about this change 
+	private void electMyselfAsLeader(){
+		thisServer.leaderChanged(true , 0000000 );
+	}
 }

@@ -6,26 +6,26 @@ import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 
-import FIFOsubsystem.Message;
-import FIFOsubsystem.SendMessage;
+import Center.GenerateInfoforOtherServers;
+import Center.Message;
+import Center.MessageTransport;
 import RemotInterfaceApp.RemotInterfacePOA;
 import servers.records.RecordManager;
 import udp.MessageExchange.WaitDoOperationMessage;
-import udp.changeLeader.WaitForNewLeader;
+import udp.MessageExchange.WaitForNewLeader;
 import utilities.RmiLogger;
 
-public class DollardFrontEnd extends RemotInterfacePOA {
+public class DollardFrontEnd extends RemotInterfacePOA  {
 	
 
     private int sequenceNum = 1;
-    private SendMessage sendMessage;
+    private MessageTransport sendMessage;
     
-    
+
     public DollardFrontEnd ()
     {
-        this.sendMessage = new SendMessage();
-        sendMessage.setFrontEnd(true);
-        sendMessage.setManagerPort(30005);
+    	GenerateInfoforOtherServers getInfo = new GenerateInfoforOtherServers("DDO");
+        this.sendMessage = new MessageTransport(getInfo.getServer1().getPort());
         startUdpServer();
     }
     
@@ -99,8 +99,6 @@ public class DollardFrontEnd extends RemotInterfacePOA {
 	}
 	
 	private void startUdpServer() {
-//		WaitForNewLeader waitForNewManager = new WaitForNewLeader(30015, this.sendMessage);
-//		waitForNewManager.start();
 		WaitDoOperationMessage waitDoOperationMessage = new WaitDoOperationMessage(20012, sendMessage);
 		waitDoOperationMessage.start();
 	}

@@ -1,4 +1,4 @@
-package Buckups;
+package Center;
 
 
 
@@ -7,12 +7,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import FIFOsubsystem.Message;
-import FIFOsubsystem.ReliableFIFO;
-import FIFOsubsystem.SendMessage;
-import failuredetectionSubSystem.PingServerInfo;
 import failuredetectionSubSystem.PingServers;
-import servers.ApplyOperations;
 import servers.records.Record;
 import servers.records.RecordManager;
 import udp.CountUdp.UDPClient;
@@ -20,35 +15,71 @@ import udp.CountUdp.UDPServerCount;
 import udp.transferRecordUDP.TowPhaseProtocolServer;
 import utilities.RmiLogger;
 
-public class MontrealBackup2 implements ApplyOperations {
-    
+public class Laval implements ApplyOperations {
+	private GenerateInfoforOtherServers getInfo;
 	private RecordManager database;
     private RmiLogger logger;
     private int sequenceNum = 1;
-    private final String serverName;
+    private String serverName;
     private boolean manager;
-    private SendMessage sendMessage;
-    private ReliableFIFO reliableFIFO;
+    private MessageTransport sendMessage;
+    private MessagesCenter reliableFIFO;
     private PingServers pingServers;
+    private ServersInfo server1;
+    private ServersInfo server2;
+    private int listenOnPort;
+    private int front1Port;
     
-    public MontrealBackup2 ()
+    
+    public Laval (int priority)
     {
-        this.serverName = "MontrealBackup2";
+    	 this.serverName = "Laval" + priority ;
         this.database = new RecordManager();
         this.logger = new RmiLogger(serverName, "server");
-        sendMessage = new SendMessage();
-        sendMessage.setBackupPort1(50005);
-        sendMessage.setBackupPort2(50025);
-        // Failure  system 
-        pingServers = new PingServers(new PingServerInfo(false , 50026) , 
-        		new PingServerInfo(true , 50006 ), this, 50046 , 50047 );
         
-        this.manager = false;
-        this.reliableFIFO = new ReliableFIFO(manager, 50045 ,50005   , this);
-        if(manager)
+        if(priority == 1){
+        	this.manager = true;
+        }
+        
+        this.serverName = "Laval";
+        this.database = new RecordManager();
+        this.logger = new RmiLogger(serverName, "server");
+        getInfo = new GenerateInfoforOtherServers("LVL");
+        initializeVaules(priority);
+        sendMessage = new MessageTransport(server1.getPort(), 
+        		server2.getPort());
+        pingServers = new PingServers(server1, server2 ,this, priority);
+        reliableFIFO = new MessagesCenter(manager, front1Port,
+        		listenOnPort, this );
+        
+        if(manager){
         	startUdpForLeaderServer();
+        }
     }
     
+    private void initializeVaules(int priority){
+   	 
+   	 switch(priority){
+   	 
+   	 case 1 :
+   		 server1 = getInfo.getServer2();
+   		 server2 =  getInfo.getServer3();
+   		 listenOnPort = getInfo.getServer1().getPort();
+   		 front1Port = getInfo.getFrontEnd().getPort();
+   	 case 2 :
+   		 server1 = getInfo.getServer1();
+   		 server2 =  getInfo.getServer3();
+   		 listenOnPort = getInfo.getServer2().getPort();
+   		 front1Port = getInfo.getServer1().getPort();
+   	 case 3 :
+   		 server1 = getInfo.getServer1();
+   		 server2 =  getInfo.getServer2();
+   		 listenOnPort = getInfo.getServer3().getPort();
+   		 front1Port = getInfo.getServer1().getPort();
+   	 }
+   	 
+    }
+   	 
     public String createDRecord (
 			String managerID,
 			String firstName, 
@@ -103,6 +134,7 @@ public class MontrealBackup2 implements ApplyOperations {
     public String getRecordCount (String managerID, int type) {
     	Message message = new Message(4,nextsequenceNum(),managerID,type );
     	sendMessage.sendTo(message);
+    	
     	final ExecutorService service;
         final Future<Integer>  LVL;
         final Future<Integer>  MTL;
@@ -144,6 +176,7 @@ public class MontrealBackup2 implements ApplyOperations {
 		}
 	}
 	
+	
 	private  void startUdpForLeaderServer() 
 	{
 		UDPServerCount udp = new UDPServerCount(9997, database);
@@ -152,19 +185,18 @@ public class MontrealBackup2 implements ApplyOperations {
 	    transferedRecord.start();
 	}
 	
-	private void statFIFoSubSystem(){
+	public void leaderChanged(boolean manager , int port){
 		
-	}
-	public void changeToleader(){
-		manager = true;
-		startUdpForLeaderServer();
+		if(manager){
+			startUdpForLeaderServer();
+			reliableFIFO.managerHasChanged(manager, front1Port);
+			pingServers.newLeader(port);
+		}else{
+			pingServers.newLeader(port);
+			reliableFIFO.managerHasChanged(manager, port);
+		}
 	}
 	
-	public void leaderChanged(boolean manager , int port){
-		this.manager = manager;
-		reliableFIFO.managerHasChanged(manager, port);
-		startUdpForLeaderServer();
-	}
 	public RecordManager getDatabase() {
 		return database;
 	}
@@ -174,8 +206,7 @@ public class MontrealBackup2 implements ApplyOperations {
 		sequenceNum = sequenceNum++;
 		return num;
 	}
-    
     public static void main(String []args){
-    	MontrealBackup2 montreal = new MontrealBackup2();
-    	}
+    	Laval laval = new Laval(1);
     }
+}

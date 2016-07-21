@@ -8,31 +8,26 @@ import org.omg.CORBA.ORB;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 
-import FIFOsubsystem.Message;
-import FIFOsubsystem.SendMessage;
+import Center.GenerateInfoforOtherServers;
+import Center.Message;
+import Center.MessageTransport;
 import RemotInterfaceApp.RemotInterfacePOA;
 import servers.records.RecordManager;
 import udp.MessageExchange.WaitDoOperationMessage;
-import udp.changeLeader.WaitForNewLeader;
+import udp.MessageExchange.WaitForNewLeader;
 import utilities.RmiLogger;
 
 public class MontrealFrontEnd extends RemotInterfacePOA {
     
-    private RecordManager database;
-    private RmiLogger logger;
-    private final String serverName;
-    private SendMessage sendMessage;
+
+    private MessageTransport sendMessage;
     private int sequenceNum;
     
     
     public MontrealFrontEnd ()
     {
-        this.serverName = "mtl";
-        this.database = new RecordManager();
-        this.logger = new RmiLogger(serverName, "server");
-        this.sendMessage = new SendMessage();
-        sendMessage.setFrontEnd(true);
-        sendMessage.setManagerPort(50005);
+    	GenerateInfoforOtherServers getInfo = new GenerateInfoforOtherServers("MTL");
+        this.sendMessage = new MessageTransport(getInfo.getServer1().getPort());
         startUdpServer() ;
     }
     
@@ -106,9 +101,6 @@ public class MontrealFrontEnd extends RemotInterfacePOA {
 	}
     private void startUdpServer() 
     {
-//    	WaitForNewLeader waitForNewManager = new WaitForNewLeader(50015, this.sendMessage);
-//		waitForNewManager.start();
-    	
 		WaitDoOperationMessage waitDoOperationMessage = new WaitDoOperationMessage(20040, sendMessage);
 		waitDoOperationMessage.start();
     }

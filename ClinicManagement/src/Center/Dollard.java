@@ -1,4 +1,4 @@
-package Buckups;
+package Center;
 
 
 import java.util.concurrent.ExecutionException;
@@ -6,12 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import FIFOsubsystem.Message;
-import FIFOsubsystem.ReliableFIFO;
-import FIFOsubsystem.SendMessage;
-import failuredetectionSubSystem.PingServerInfo;
 import failuredetectionSubSystem.PingServers;
-import servers.ApplyOperations;
 import servers.records.Record;
 import servers.records.RecordManager;
 import udp.CountUdp.UDPClient;
@@ -19,35 +14,65 @@ import udp.CountUdp.UDPServerCount;
 import udp.transferRecordUDP.TowPhaseProtocolServer;
 import utilities.RmiLogger;
 
-public class DollardBackup1 implements ApplyOperations {
-	
+public class Dollard implements ApplyOperations {
+		private GenerateInfoforOtherServers getInfo;
 		private RecordManager database;
 	    private RmiLogger logger;
 	    private int sequenceNum = 1;
 	    private final String serverName;
 	    private boolean manager;
-	    private SendMessage sendMessage;
-	    private ReliableFIFO reliableFIFO;
+	    private MessageTransport sendMessage;
+	    private MessagesCenter reliableFIFO;
 	    private PingServers pingServers;
-	    
-	    public DollardBackup1 ()
+	    private ServersInfo server1;
+	    private ServersInfo server2;
+	    private int listenOnPort;
+	    private int front1Port;
+	    public Dollard (int priority )
 	    {
-	        this.serverName = "DollardBackup1";
+	        if(priority == 1){
+	        	this.manager = true;
+	        }
+	        
+	        this.serverName = "Dollard" + priority;
 	        this.database = new RecordManager();
 	        this.logger = new RmiLogger(serverName, "server");
-	        sendMessage = new SendMessage();
-	        sendMessage.setBackupPort1(30005);
-	        sendMessage.setBackupPort2(30045);
-	        // Failure  system 
-	        pingServers = new PingServers(new PingServerInfo(true , 30006 ) , 
-	        		new PingServerInfo(false , 30046), this, 30026  , 30027  );
-	        this.manager = false;
-	        reliableFIFO = new ReliableFIFO(manager, 30025 , 30005 , this );
+	        getInfo = new GenerateInfoforOtherServers("DDO");
+	        initializeVaules(priority);
+	        sendMessage = new MessageTransport(server1.getPort(), 
+	        		server2.getPort());
+	        pingServers = new PingServers(server1, server2 ,this, priority);
+	        reliableFIFO = new MessagesCenter(manager, front1Port,
+	        		listenOnPort, this );
+	        
 	        if(manager){
 	        	startUdpForLeaderServer();
 	        }
 	    }
 	    
+	    
+	    private void initializeVaules(int priority){
+	    	 
+	    	 switch(priority){
+	    	 
+	    	 case 1 :
+	    		 server1 = getInfo.getServer2();
+	    		 server2 =  getInfo.getServer3();
+	    		 listenOnPort = getInfo.getServer1().getPort();
+	    		 front1Port = getInfo.getFrontEnd().getPort();
+	    	 case 2 :
+	    		 server1 = getInfo.getServer1();
+	    		 server2 =  getInfo.getServer3();
+	    		 listenOnPort = getInfo.getServer2().getPort();
+	    		 front1Port = getInfo.getServer1().getPort();
+	    	 case 3 :
+	    		 server1 = getInfo.getServer1();
+	    		 server2 =  getInfo.getServer2();
+	    		 listenOnPort = getInfo.getServer3().getPort();
+	    		 front1Port = getInfo.getServer1().getPort();
+	    	 }
+	    	 
+	    }
 		public String createDRecord (
 				String managerID,
 				String firstName, 
@@ -66,6 +91,7 @@ public class DollardBackup1 implements ApplyOperations {
 		      	}
 		      	return record.getStatusMessage();
 		}
+		
 		    
 		public String createNRecord (
 			String managerID,
@@ -151,10 +177,17 @@ public class DollardBackup1 implements ApplyOperations {
 		    transferedRecord.start();
 		}
 		
+		
+		
 		public void leaderChanged(boolean manager , int port){
-			this.manager = manager;
-			reliableFIFO.managerHasChanged(manager, port);
-			startUdpForLeaderServer();
+			
+			if(manager){
+				startUdpForLeaderServer();
+				reliableFIFO.managerHasChanged(manager, front1Port);
+			}else{
+				pingServers.newLeader(port);
+				reliableFIFO.managerHasChanged(manager, port);
+			}
 		}
 		
 		public RecordManager getDatabase() {
@@ -167,8 +200,9 @@ public class DollardBackup1 implements ApplyOperations {
 			return num;
 		}
 //----------------------------------------------(RunCROBAobject)-------------------------------------------------------------------------
-public static void main(String []args){
-	DollardBackup1 dollard = new DollardBackup1();    		
-}
 
+		public static void main(String [] args){
+			
+			
+		}
 }

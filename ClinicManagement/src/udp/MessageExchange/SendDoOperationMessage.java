@@ -9,7 +9,7 @@ import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.Callable;
 
-import FIFOsubsystem.Message;
+import Center.Message;
 
 public class SendDoOperationMessage extends Thread {
 

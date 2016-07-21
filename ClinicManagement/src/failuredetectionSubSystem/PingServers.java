@@ -3,28 +3,23 @@ package failuredetectionSubSystem;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import servers.ApplyOperations;
-import udp.MessageExchange.PingListener;
-import udp.MessageExchange.PingMessage;
+import Center.ApplyOperations;
+import Center.Message;
+import Center.ServersInfo;
+import udp.MessageExchange.SendDoOperationMessage;
 
 public class PingServers {
 	
-	private PingServerInfo server1info;
-	private PingServerInfo server2info;
+	private ServersInfo server1info;
+	private ServersInfo server2info;
 	private ApplyOperations thisServer;
-	private boolean server1Working =true;
-	private boolean server2Working =true;
-	private int portForPing;
-	private int portForNewLeader;
-	public PingServers(PingServerInfo server1info , PingServerInfo server2info , 
-			ApplyOperations thisServer, int portForPing, int portForNewLeader ){
+
+	public PingServers(ServersInfo server1info , ServersInfo server2info , 
+			ApplyOperations thisServer, int priority ){
 		this.server1info = server1info;
 		this.server2info = server2info; 
 		this.thisServer = thisServer;
-		this.portForNewLeader = portForNewLeader;
-		this.portForPing = portForPing;
-		// statTimer();
-		//startPing_newLeaderListener();
+		statTimer();
 	}
 
 	
@@ -38,18 +33,20 @@ public class PingServers {
 	    };
 	    timer.scheduleAtFixedRate(TimerTask, 1000 * 120 , 1000);
 	  }
+	
 
+	
 	private void checkServes(){
-		if(server1Working){
+		if(server1info.isStillWorking()){
 			checkServeOne();
 		}
-		if(server2Working){
+		if(server2info.isStillWorking()){
 			checkServerTwo();
 		}
 	}
 	
 	private void checkServeOne(){
-		PingMessage pingMessage = new PingMessage(server1info.getPort());
+		SendDoOperationMessage pingMessage = new SendDoOperationMessage(server1info.getPort(), new Message());
 		pingMessage.start();
 		
 		try {
@@ -58,17 +55,16 @@ public class PingServers {
 			e.printStackTrace();
 		}
 		
-		if(pingMessage.getRespones().trim().equalsIgnoreCase("noResponse")){
-			  if(server1info.isManager()){
+		if(pingMessage.getResultResponse().trim().equalsIgnoreCase("noResponse")){
+			  if(server1info.isLeader()){
 				  new BullyAlgorithm(server1info , server2info ,thisServer );
-				  
 			  }
-			  server1Working = false;
+			  	server1info.setStillWorking(false);
 		}
 	}
 	
 	private void checkServerTwo(){
-		PingMessage pingMessage = new PingMessage(server2info.getPort());
+		SendDoOperationMessage pingMessage = new SendDoOperationMessage(server2info.getPort(),new Message());
 		pingMessage.start();
 		
 		try {
@@ -77,20 +73,24 @@ public class PingServers {
 			e.printStackTrace();
 		}
 		
-		if(pingMessage.getRespones().trim().equalsIgnoreCase("noResponse")){
-			  if(server1info.isManager()){
+		if(pingMessage.getResultResponse().trim().equalsIgnoreCase("noResponse")){
+			  if(server1info.isLeader()){
 				  new BullyAlgorithm(server1info , server2info ,thisServer ); 
 			  }
-			  server1Working = false;
+			  server2info.setStillWorking(false);
 		}
 		
 	}
 	
-	private void startPing_newLeaderListener(){
-		PingListener pingListener = new PingListener(portForPing);
-		pingListener.start();
-		//WaitForNewLeader
+	public void newLeader(int LeaderPortport){
+		
+		if(server1info.getPort() == LeaderPortport){
+			server1info.setLeader(true);
+		}else if(server2info.getPort() == LeaderPortport){
+			server2info.setLeader(true);
+		}else{
+			server1info.setLeader(false);
+			server2info.setLeader(false);
+		}
 	}
-	
-	
 }
