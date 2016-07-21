@@ -6,12 +6,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-import Center.ServerOperations;
 import Center.AllServersInfo;
 import Center.Message;
 import Center.MessageTransport;
 import Center.MessagesCenter;
 import Center.ServerInfo;
+import Center.ServerOperations;
 import failuredetection.PingServers;
 import servers.records.Record;
 import servers.records.RecordManager;
@@ -25,7 +25,6 @@ public class Dollard implements ServerOperations {
 		private AllServersInfo getInfo;
 		private RecordManager database;
 	    private RmiLogger logger;
-	    private int sequenceNum = 1;
 	    private final String serverName;
 	    private boolean manager;
 	    private MessageTransport sendMessage;
@@ -76,11 +75,11 @@ public class Dollard implements ServerOperations {
 		        									server2.getPort());
 		        
 		        pingServers = new PingServers(server1 , server2 , 
-		        								getInfo.getAllserver() ,
+		        								getInfo ,
 		        								this, processID);
 		        
 		        messageCenter = new MessagesCenter(manager, front1Port,
-		        									listenOnPort, this );
+		        									listenOnPort, this, processID, getInfo);
 	    }
 	    
 		public String createDRecord (
@@ -90,13 +89,14 @@ public class Dollard implements ServerOperations {
 				String address, 
 				String phone, 
 				String specialization,
-				String location
+				String location,
+			    int sequenceNum
 		)  {
 		    Record record;
 		    record = database.createDRecord(firstName, lastName, address, phone, specialization, location);
 		    logger.log(record);
 		      	if(record.isSuccessful()){
-		      		Message message = new Message(1, nextsequenceNum(), managerID , record);
+		      		Message message = new Message(1, sequenceNum, managerID , record);
 		      		sendMessage.sendTo(message);
 		      	}
 		      	return record.getStatusMessage();
@@ -109,34 +109,35 @@ public class Dollard implements ServerOperations {
 			String lastName, 
 			String designation,
 			String status,
-			String statusDate
+			String statusDate,
+			int sequenceNum
 	    ) {
 
 	            Record record;
 	            record = database.createNRecord(firstName, lastName, designation, status, statusDate);
 	    	    logger.log(record);
 	    	      	if(record.isSuccessful()){
-	    	      		Message message = new Message(2, nextsequenceNum(), managerID , record);
+	    	      		Message message = new Message(2, sequenceNum , managerID , record);
 	    	      		sendMessage.sendTo(message);
 	    	      	}
 	    	      	return record.getStatusMessage();
 		}
 		
-	    public String editRecord (String managerID,String recordId, String fieldName, String newValue) {
+	    public String editRecord (String managerID,String recordId, String fieldName, String newValue, int sequenceNum ) {
 	        
 	        Record record;
 	        record = database.editRecord(recordId, fieldName, newValue);
 		    logger.log(record);
 		      	if(record.isSuccessful()){
-		      		Message message = new Message(3, nextsequenceNum(), managerID , recordId,fieldName, newValue );
+		      		Message message = new Message(3, sequenceNum, managerID , recordId,fieldName, newValue );
 		      		sendMessage.sendTo(message);
 		      	}
 		      	return record.getStatusMessage();
 	    } 
 
 	    
-	    public String getRecordCount (String managerID, int type) {
-	    	Message message = new Message(4,nextsequenceNum(),managerID,type );
+	    public String getRecordCount (String managerID, int type,int sequenceNum) {
+	    	Message message = new Message(4,sequenceNum ,managerID,type );
 	    	sendMessage.sendTo(message);
 	    	final ExecutorService service;
 	        final Future<Integer>  LVL;
@@ -163,12 +164,12 @@ public class Dollard implements ServerOperations {
 	    }
 	    
 		
-		public String transferRecord(String managerID, String recordID, String remoteClinicServerName) {
+		public String transferRecord(String managerID, String recordID, String remoteClinicServerName, int sequenceNum) {
 			String result; 
 			if(database.transferRecord(managerID, recordID, remoteClinicServerName)){
 				result = "Record "+recordID + " has been transferd";
 				logger.log(result);
-	      		Message message = new Message(5, nextsequenceNum(), managerID , recordID,remoteClinicServerName);
+	      		Message message = new Message(5, sequenceNum , managerID , recordID,remoteClinicServerName);
 	      		sendMessage.sendTo(message);
 				return result;
 			}
@@ -202,12 +203,6 @@ public class Dollard implements ServerOperations {
 		
 		public RecordManager getDatabase() {
 			return database;
-		}
-
-		private synchronized int nextsequenceNum(){
-			int num = sequenceNum;
-			sequenceNum = sequenceNum++;
-			return num;
 		}
 //----------------------------------------------(RunCROBAobject)-------------------------------------------------------------------------
 

@@ -1,7 +1,6 @@
 package failuredetection;
 
-import java.util.ArrayList;
-
+import Center.AllServersInfo;
 import Center.Message;
 import Center.ServerInfo;
 import Center.ServerOperations;
@@ -9,34 +8,37 @@ import udp.SendingOperationMessage;
 
 public class BullyAlgorithm {
 
-	private ArrayList<ServerInfo> allServers;
+	private AllServersInfo serversInfo;
 	private ServerOperations thisServer;
 	private int processID;
 	private boolean respond;
+	private boolean bullyAlgorithm;
 	
-	public BullyAlgorithm(int processID, ArrayList<ServerInfo> allServers, ServerOperations thisServer){
+	public BullyAlgorithm(int processID, AllServersInfo serversInfo, ServerOperations thisServer){
 		
 		this.processID = processID;
-		this.allServers = allServers; 
+		this.serversInfo = serversInfo; 
 		this.thisServer = thisServer;
 		this.respond = false ;
+		this.bullyAlgorithm = true;
 		elect();
 	}
 	
 
 		private void elect(){
 		
-			for( ServerInfo server : allServers ){
+			for( ServerInfo server : serversInfo.getAllserver() ){
 				if(processID < server.getprocessID()){
 						SendingOperationMessage checkAvailability = 
-							new SendingOperationMessage(server.getPort(), new Message());
+							new SendingOperationMessage(server.getPort(), new Message(bullyAlgorithm));
+						checkAvailability.start();
 						try {
 							checkAvailability.join();
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
 						
-						if( checkAvailability.getResultResponse().equals("noResponse")){
+						if( ! checkAvailability.getResultResponse().equals("noResponse")){
 							respond = true; 
 						}
 				}
@@ -49,6 +51,35 @@ public class BullyAlgorithm {
 	
 		
 	private void electMyselfAsLeader(){
+		// get this process port
+		int thisProcessPort = 0; 
+		for( ServerInfo server : serversInfo.getAllserver()  ){
+			if(server.getprocessID() == processID){
+				thisProcessPort = server.getPort();
+			}
+		}
+		
+		// info the front End
+		
+		SendingOperationMessage toFrontEnd = 
+				new SendingOperationMessage(serversInfo.getFrontEnd().getPort(), new Message(thisProcessPort));
+		toFrontEnd.start();
+		try {
+			toFrontEnd.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		// infom other process a new leader has elect
+		for( ServerInfo server : serversInfo.getAllserver() ){
+			if(server.getprocessID() != processID){
+					SendingOperationMessage newLeader = 
+							new SendingOperationMessage(server.getPort(), new Message(thisProcessPort));
+					newLeader.start();
+			}
+		}
+		
 		thisServer.leaderChanged(true , 0 );
 	}
+	
 }

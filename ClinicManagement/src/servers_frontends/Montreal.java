@@ -22,10 +22,9 @@ import udp.UDPServerCount;
 import utilities.RmiLogger;
 
 public class Montreal implements ServerOperations {
-	private AllServersInfo getInfo;
+	private AllServersInfo serversInfo;
 	private RecordManager database;
     private RmiLogger logger;
-    private int sequenceNum = 1;
     private final String serverName;
     private boolean manager;
     private MessageTransport sendMessage;
@@ -54,32 +53,32 @@ public class Montreal implements ServerOperations {
     
     private void initializeVaules(int processID){
    	 
-    	 getInfo = new AllServersInfo("MTL");
+    	 serversInfo = new AllServersInfo("MTL");
     	 
    	 switch(processID){
    	 
    	 	case 1 :
-   	 		server1 = getInfo.getServer2();
-	   		 server2 =  getInfo.getServer3();
-	   		 listenOnPort = getInfo.getServer1().getPort();
-	   		 front1Port = getInfo.getFrontEnd().getPort();
+   	 		server1 = serversInfo.getServer2();
+	   		 server2 =  serversInfo.getServer3();
+	   		 listenOnPort = serversInfo.getServer1().getPort();
+	   		 front1Port = serversInfo.getFrontEnd().getPort();
    	 	case 2 :
-	   		 server1 = getInfo.getServer1();
-	   		 server2 =  getInfo.getServer3();
-	   		 listenOnPort = getInfo.getServer2().getPort();
-	   		 front1Port = getInfo.getServer1().getPort();
+	   		 server1 = serversInfo.getServer1();
+	   		 server2 =  serversInfo.getServer3();
+	   		 listenOnPort = serversInfo.getServer2().getPort();
+	   		 front1Port = serversInfo.getServer1().getPort();
    	 	case 3 :
-	   		 server1 = getInfo.getServer1();
-	   		 server2 =  getInfo.getServer2();
-	   		 listenOnPort = getInfo.getServer3().getPort();
-	   		 front1Port = getInfo.getServer1().getPort();
+	   		 server1 = serversInfo.getServer1();
+	   		 server2 =  serversInfo.getServer2();
+	   		 listenOnPort = serversInfo.getServer3().getPort();
+	   		 front1Port = serversInfo.getServer1().getPort();
    	 }
    	 
    	 	sendMessage = new MessageTransport(server1.getPort(), 
    	 										server2.getPort());
-   	 	pingServers = new PingServers(server1, server2 , getInfo.getAllserver() , this, processID);
+   	 	pingServers = new PingServers(server1, server2 , serversInfo , this, processID);
    	 	messageCenter = new MessagesCenter(manager, front1Port,
-   	 											listenOnPort, this );
+   	 											listenOnPort, this, processID, serversInfo  );
     }
     
     public String createDRecord (
@@ -89,13 +88,14 @@ public class Montreal implements ServerOperations {
 			String address, 
 			String phone, 
 			String specialization,
-			String location
+			String location,
+			int sequenceNum
 	)  {
 	    Record record;
 	    record = database.createDRecord(firstName, lastName, address, phone, specialization, location);
 	    logger.log(record);
 	      	if(record.isSuccessful()){
-	      		Message message = new Message(1, nextsequenceNum(), managerID , record);
+	      		Message message = new Message(1, sequenceNum , managerID , record);
 	      		sendMessage.sendTo(message);
 	      	}
 	      	return record.getStatusMessage();
@@ -107,34 +107,35 @@ public class Montreal implements ServerOperations {
 		String lastName, 
 		String designation,
 		String status,
-		String statusDate
+		String statusDate,
+		int sequenceNum
     ) {
 
             Record record;
             record = database.createNRecord(firstName, lastName, designation, status, statusDate);
     	    logger.log(record);
     	      	if(record.isSuccessful()){
-    	      		Message message = new Message(2, nextsequenceNum(), managerID , record);
+    	      		Message message = new Message(2, sequenceNum , managerID , record);
     	      		sendMessage.sendTo(message);
     	      	}
     	      	return record.getStatusMessage();
 	}
 	
-    public String editRecord (String managerID,String recordId, String fieldName, String newValue) {
+    public String editRecord (String managerID,String recordId, String fieldName, String newValue, int sequenceNum) {
         
         Record record;
         record = database.editRecord(recordId, fieldName, newValue);
 	    logger.log(record);
 	      	if(record.isSuccessful()){
-	      		Message message = new Message(3, nextsequenceNum(), managerID , recordId,fieldName, newValue );
+	      		Message message = new Message(3, sequenceNum, managerID , recordId,fieldName, newValue );
 	      		sendMessage.sendTo(message);
 	      	}
 	      	return record.getStatusMessage();
     } 
 
     
-    public String getRecordCount (String managerID, int type) {
-    	Message message = new Message(4,nextsequenceNum(),managerID,type );
+    public String getRecordCount (String managerID, int type, int sequenceNum) {
+    	Message message = new Message(4, sequenceNum, managerID, type );
     	sendMessage.sendTo(message);
     	final ExecutorService service;
         final Future<Integer>  LVL;
@@ -161,12 +162,12 @@ public class Montreal implements ServerOperations {
     }
     
 	
-	public String transferRecord(String managerID, String recordID, String remoteClinicServerName) {
+	public String transferRecord(String managerID, String recordID, String remoteClinicServerName, int sequenceNum) {
 		String result; 
 		if(database.transferRecord(managerID, recordID, remoteClinicServerName)){
 			result = "Record "+recordID + " has been transferd";
 			logger.log(result);
-      		Message message = new Message(5, nextsequenceNum(), managerID , recordID,remoteClinicServerName);
+      		Message message = new Message(5, sequenceNum, managerID , recordID,remoteClinicServerName);
       		sendMessage.sendTo(message);
 			return result;
 		}
@@ -200,12 +201,6 @@ public class Montreal implements ServerOperations {
 		return database;
 	}
 
-	private synchronized int nextsequenceNum(){
-		int num = sequenceNum;
-		sequenceNum = sequenceNum++;
-		return num;
-	}
-    
     public static void main(String []args){
     	Montreal montreal = new Montreal(1);
     	}

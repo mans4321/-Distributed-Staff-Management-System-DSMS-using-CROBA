@@ -1,24 +1,23 @@
 package failuredetection;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import Center.ServerOperations;
+import Center.AllServersInfo;
 import Center.Message;
 import Center.ServerInfo;
+import Center.ServerOperations;
 import udp.SendingOperationMessage;
 
 public class PingServers {
 	
 	private ServerInfo server1info;
 	private ServerInfo server2info;
-	private ArrayList<ServerInfo> allServers;
+	private AllServersInfo allServers;
 	private ServerOperations thisServer;
-	private int processID; 
-
+	private int processID;  
 	public PingServers(ServerInfo server1info , ServerInfo server2info , 
-			ArrayList<ServerInfo> allServers, ServerOperations thisServer, int processID ){
+			AllServersInfo allServers, ServerOperations thisServer, int processID ){
 		this.server1info = server1info;
 		this.server2info = server2info; 
 		this.allServers =  allServers;
@@ -51,7 +50,7 @@ public class PingServers {
 	}
 	
 	private void checkServeOne(){
-		SendingOperationMessage pingMessage = new SendingOperationMessage(server1info.getPort(), new Message());
+		SendingOperationMessage pingMessage = new SendingOperationMessage(server1info.getPort(), new Message(false));
 		pingMessage.start();
 		
 		try {
@@ -69,7 +68,7 @@ public class PingServers {
 	}
 	
 	private void checkServerTwo(){
-		SendingOperationMessage pingMessage = new SendingOperationMessage(server2info.getPort(),new Message());
+		SendingOperationMessage pingMessage = new SendingOperationMessage(server2info.getPort(),new Message(false));
 		pingMessage.start();
 		
 		try {

@@ -20,7 +20,7 @@ public class InvolkeMethod {
 		 	case 1:
 		 		result = server.createDRecord(message.getManagerID(), message.getFirstName(), 
 		 	    		 message.getLastName(), message.getAddress(), message.getPhone(), 
-		 	    		 message.getSpecialization(), message.getLocation());
+		 	    		 message.getSpecialization(), message.getLocation(), message.getSequenceNum());
 		 		message.setResponse(result);
 		 		sendResult(message);
 		 		
@@ -28,24 +28,24 @@ public class InvolkeMethod {
 		 	case 2: 
 		 		result = server.createNRecord(message.getManagerID(), message.getFirstName(),
 		 				 message.getLastName(), message.getDesignation(), 
-		 				 message.getStatus() , message.getStatusDate());
+		 				 message.getStatus() , message.getStatusDate(), message.getSequenceNum());
 		 		message.setResponse(result);
 		 		sendResult(message);
 		 		break;
 		 	case 3 :
 		 		result = server.editRecord(message.getManagerID(), message.getRecordID(),
-		 				 message.getFieldName(), message.getNewValue());
+		 				 message.getFieldName(), message.getNewValue(), message.getSequenceNum());
 		 		message.setResponse(result);
 		 		sendResult(message);
 		 		break;
 		 	case 4:
-		 		result = server.getRecordCount(message.getManagerID(), message.getCountType());
+		 		result = server.getRecordCount(message.getManagerID(), message.getCountType(), message.getSequenceNum());
 		 		message.setResponse(result);
 		 		sendResult(message);
 		 		break;
 		 	case 5 :
 		 	    result = server.transferRecord(message.getManagerID(), message.getRecordID(),
-		 	    		 message.getLocation());
+		 	    		 message.getLocation(), message.getSequenceNum());
 		 	    message.setResponse(result);
 		 	    sendResult(message);
 		 	    break;

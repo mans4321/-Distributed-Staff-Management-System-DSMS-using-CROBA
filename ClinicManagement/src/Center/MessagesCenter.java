@@ -1,5 +1,8 @@
 package Center;
 
+import java.util.ArrayList;
+
+import failuredetection.BullyAlgorithm;
 import fifo.FIFOMessages;
 import udp.ClientOperationMessage;
 import udp.ServerOperationMessage;
@@ -10,11 +13,18 @@ public class MessagesCenter {
 	private ServerOperations server;
 	private int listenerPort;
 	private FIFOMessages fifo; 
+	private int processID;
+	private AllServersInfo allServers;
 	
-	public MessagesCenter(boolean manager ,int listenerPort ,  int ManagerPort, ServerOperations server){
-	       this.server = server;
+	public MessagesCenter(boolean manager ,int listenerPort ,  
+							int ManagerPort, ServerOperations server, 
+							int processID, AllServersInfo allServers){
+	      
+		   this.server = server;
 	       this.listenerPort = listenerPort;
-	       fifo = new FIFOMessages(manager,ManagerPort,server);
+	       fifo = new FIFOMessages(manager,ManagerPort, server);
+	       this.processID = processID;
+	       this.allServers = allServers;
 	       activateListenerThread();
 	}
 	
@@ -33,8 +43,11 @@ public class MessagesCenter {
 	   private void handle(Message message){
 		   
 		   if(message.isCheckAvailability()){
+			   		message.setResponse("A_live");
 			        new ClientOperationMessage(message);  
-		   	} else{
+		   	}else if(message.isBullyAlgorithm()){
+		   		new BullyAlgorithm(processID, allServers, server);
+		   	}else{
 		   		newLeaderMessage( false , message.getLeaderPort() );
 		   	}
 		   

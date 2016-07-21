@@ -23,6 +23,7 @@ private String response;
     											// info about the new manager
     											// the port number to return message to 
    
+   private boolean bullyAlgorithm = false; 
    private int leaderPort;
    private int senderPort;
    private int operationID;
@@ -54,9 +55,10 @@ private String response;
    /**
     * ping
     */
-   public Message(){
+   public Message(boolean bullyAlgorithm ){
 	   this.checkAvailability = true;
 	   this.pingSystem = true;
+	   this.bullyAlgorithm = bullyAlgorithm;
    }
    
    /**
@@ -67,9 +69,6 @@ private String response;
 	   this.leaderPort = newLeaderport;
 	   this.pingSystem = true;
 	   this.checkAvailability = false;      //#todo        
-	  
-	   
-	   
    }
    
    /**
@@ -272,6 +271,13 @@ public boolean isCheckAvailability() {
 
 public int getLeaderPort() {
 	return leaderPort;
+}
+
+
+
+
+public boolean isBullyAlgorithm() {
+	return bullyAlgorithm;
 }
 
 
