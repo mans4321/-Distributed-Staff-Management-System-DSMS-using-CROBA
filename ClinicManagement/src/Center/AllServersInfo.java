@@ -24,18 +24,19 @@ public class AllServersInfo {
 				server2 = new ServerInfo(false, 30014  , 2);
 				server3 = new ServerInfo(false, 30016 , 3);
 				frontEnd = new ServerInfo(20012);
-				
+				break;
 			case"MTL":
 				server1 = new ServerInfo(true, 30018  , 1);
 				server2 = new ServerInfo(false, 30020  , 2);
 				server3 = new ServerInfo(false, 30022  , 3);
 				frontEnd = new ServerInfo(20032);
-				
+				break;
 			case"LVL":
 				server1 = new ServerInfo(true, 30024  , 1);
 				server2 = new ServerInfo(false, 30026  , 2);
 				server3 = new ServerInfo(false, 30028  , 3);
 				frontEnd = new ServerInfo(20040);
+				break;
 			}
 	}
 

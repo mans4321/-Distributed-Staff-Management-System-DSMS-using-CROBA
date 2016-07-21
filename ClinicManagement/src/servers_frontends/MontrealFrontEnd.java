@@ -117,7 +117,7 @@ public class MontrealFrontEnd extends RemotInterfacePOA {
        		PrintWriter file = new PrintWriter("Montreal.txt");
        		file.println(ior);
        		file.close();
-       		System.out.println("Montreal clinic running");
+       		System.out.println("Montreal forntEnd clinic running");
        		orb.run();
     		}catch(Exception e){
     			e.printStackTrace(System.out);	

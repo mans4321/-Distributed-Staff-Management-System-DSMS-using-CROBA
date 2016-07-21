@@ -12,13 +12,13 @@ import Center.MessageTransport;
 public class ServerOperationMessage extends Thread{
 
 	private int port;
-	private MessagesCenter reliableFIFO;
+	private MessagesCenter messageCenter;
 	private MessageTransport sendMessage;
 	private boolean isFrontEnd;
 	
-	public ServerOperationMessage(int port , MessagesCenter reliableFIFO){
+	public ServerOperationMessage(int port , MessagesCenter messageCenter){
 		this.port = port;
-		this.reliableFIFO = reliableFIFO;
+		this.messageCenter = messageCenter;
 		isFrontEnd = false;
 	}
 	
@@ -35,6 +35,7 @@ public class ServerOperationMessage extends Thread{
 		   DatagramSocket socket;
 		      try
 		      {
+		    	  System.out.println(port);
 		    	 socket = new DatagramSocket(port);  
 		         ObjectInputStream is;
 		         ByteArrayInputStream in;
@@ -50,7 +51,7 @@ public class ServerOperationMessage extends Thread{
 		             Message message = (Message) is.readObject();
 		             message.setSenderPort(incomingPacket.getPort());
 		             if(! isFrontEnd ){
-		             reliableFIFO.recieive(message); 
+		            	 messageCenter.recieive(message); 
 		             }else{
 		            	 sendMessage.recieive(message);
 		             }

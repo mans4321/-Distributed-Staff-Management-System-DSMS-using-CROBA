@@ -52,11 +52,13 @@ public class MessageTransport {
 		
 		SendingOperationMessage manager = new SendingOperationMessage(managerPort , message);
 		manager.start();
+	
 		try {
 			manager.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		System.out.println("manager respobse :" + manager.getResultResponse());
 		
 		if(manager.getResultResponse().trim().equalsIgnoreCase("noResponse")){
@@ -139,6 +141,7 @@ public class MessageTransport {
 		
 	
 	 private void ChangeLead(Message message){
+		 System.out.println("manager has changed ");
 		 managerPort = message.getLeaderPort();
 		 
 		 for(Message messageLost : managerLost ){

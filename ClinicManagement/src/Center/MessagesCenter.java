@@ -22,7 +22,7 @@ public class MessagesCenter {
 	      
 		   this.server = server;
 	       this.listenerPort = listenerPort;
-	       fifo = new FIFOMessages(manager,ManagerPort, server);
+	       fifo = new FIFOMessages(manager, ManagerPort, server);
 	       this.processID = processID;
 	       this.allServers = allServers;
 	       activateListenerThread();
@@ -35,7 +35,8 @@ public class MessagesCenter {
 		   if(message.isPingSystem()){
 			   handle(message);
 		   }else{
-			   fifo.recieive(message);
+			   System.out.println("MessagesCenter + fifo "   +  processID);
+			   fifo.recieivefifo(message);
 		   }
 	   }
 	   
@@ -44,11 +45,13 @@ public class MessagesCenter {
 		   
 		   if(message.isCheckAvailability()){
 			   		message.setResponse("A_live");
-			        new ClientOperationMessage(message);  
+			        new ClientOperationMessage(message).start();  
 		   	}else if(message.isBullyAlgorithm()){
+		   	   System.out.println("MessagesCenter + BullyAlgorithm "   +  processID);
 		   		new BullyAlgorithm(processID, allServers, server);
 		   	}else{
 		   		newLeaderMessage( false , message.getLeaderPort() );
+		   		System.out.println("MessagesCenter + newLeaderMessage "   +  processID);
 		   	}
 		   
 	   }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T18:17:25</date>
+  <millis>1469139445002</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>13</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>

@@ -59,16 +59,19 @@ public class Dollard implements ServerOperations {
 	    		 server2 =  getInfo.getServer3();
 	    		 listenOnPort = getInfo.getServer1().getPort();
 	    		 front1Port = getInfo.getFrontEnd().getPort();
+	    		 break;
 	    	 case 2 :
 	    		 server1 = getInfo.getServer1();
 	    		 server2 =  getInfo.getServer3();
 	    		 listenOnPort = getInfo.getServer2().getPort();
 	    		 front1Port = getInfo.getServer1().getPort();
+	    		 break;
 	    	 case 3 :
 	    		 server1 = getInfo.getServer1();
 	    		 server2 =  getInfo.getServer2();
 	    		 listenOnPort = getInfo.getServer3().getPort();
 	    		 front1Port = getInfo.getServer1().getPort();
+	    		 break;
 	    	 }
 	    	 
 		        sendMessage = new MessageTransport(server1.getPort(), 
@@ -78,8 +81,8 @@ public class Dollard implements ServerOperations {
 		        								getInfo ,
 		        								this, processID);
 		        
-		        messageCenter = new MessagesCenter(manager, front1Port,
-		        									listenOnPort, this, processID, getInfo);
+		        messageCenter = new MessagesCenter(manager, listenOnPort , front1Port,
+		        									 this, processID, getInfo);
 	    }
 	    
 		public String createDRecord (
@@ -93,6 +96,7 @@ public class Dollard implements ServerOperations {
 			    int sequenceNum
 		)  {
 		    Record record;
+		    System.out.println("leader creating a doctor record "   );
 		    record = database.createDRecord(firstName, lastName, address, phone, specialization, location);
 		    logger.log(record);
 		      	if(record.isSuccessful()){
@@ -137,8 +141,10 @@ public class Dollard implements ServerOperations {
 
 	    
 	    public String getRecordCount (String managerID, int type,int sequenceNum) {
+	    	
 	    	Message message = new Message(4,sequenceNum ,managerID,type );
 	    	sendMessage.sendTo(message);
+	    	
 	    	final ExecutorService service;
 	        final Future<Integer>  LVL;
 	        final Future<Integer>  MTL;

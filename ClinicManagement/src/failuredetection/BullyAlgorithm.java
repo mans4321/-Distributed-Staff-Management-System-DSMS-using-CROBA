@@ -27,8 +27,10 @@ public class BullyAlgorithm {
 
 		private void elect(){
 		
+			System.out.println("BullyAlgorithm  elect ");
+
 			for( ServerInfo server : serversInfo.getAllserver() ){
-				if(processID < server.getprocessID()){
+				if(server.getprocessID() < processID ){
 						SendingOperationMessage checkAvailability = 
 							new SendingOperationMessage(server.getPort(), new Message(bullyAlgorithm));
 						checkAvailability.start();
@@ -52,10 +54,12 @@ public class BullyAlgorithm {
 		
 	private void electMyselfAsLeader(){
 		// get this process port
+		System.out.println("BullyAlgorithm  electMyselfAsLeader ");
 		int thisProcessPort = 0; 
 		for( ServerInfo server : serversInfo.getAllserver()  ){
 			if(server.getprocessID() == processID){
 				thisProcessPort = server.getPort();
+				System.out.println("BullyAlgorithm  electMyselfAsLeader  thisProcessPort");
 			}
 		}
 		

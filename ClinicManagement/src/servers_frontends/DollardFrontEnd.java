@@ -17,11 +17,11 @@ public class DollardFrontEnd extends RemotInterfacePOA  {
 
     private int sequenceNum = 1;
     private MessageTransport sendMessage;
-    
+    private AllServersInfo getInfo;
 
     public DollardFrontEnd ()
     {
-    	AllServersInfo getInfo = new AllServersInfo("DDO");
+    	 getInfo = new AllServersInfo("DDO");
         this.sendMessage = new MessageTransport(getInfo.getServer1().getPort());
         startUdpServer();
     }
@@ -96,7 +96,7 @@ public class DollardFrontEnd extends RemotInterfacePOA  {
 	}
 	
 	private void startUdpServer() {
-		ServerOperationMessage waitDoOperationMessage = new ServerOperationMessage(20012, sendMessage);
+		ServerOperationMessage waitDoOperationMessage = new ServerOperationMessage(getInfo.getFrontEnd().getPort(), sendMessage);
 		waitDoOperationMessage.start();
 	}
 
@@ -116,7 +116,7 @@ public static void main(String []args){
 	       		PrintWriter file = new PrintWriter("Dollard.txt");
 	       		file.println(ior);
 	       		file.close();
-	       		System.out.println("DDO clinic running");
+	       		System.out.println("DDO forntEnd clinic running");
 	       		orb.run();
 		}catch(Exception e){
 			e.printStackTrace(System.out);	

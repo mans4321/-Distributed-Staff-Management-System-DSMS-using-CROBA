@@ -24,6 +24,7 @@ public class PingServers {
 		this.thisServer = thisServer;
 		this.processID = processID;
 		statTimer();
+		System.out.println("PingServers " +  processID);
 	}
 
 	
@@ -35,7 +36,7 @@ public class PingServers {
 	    		checkServes();
 	    	}
 	    };
-	    timer.scheduleAtFixedRate(TimerTask, 1000 * 120 , 1000);
+	    timer.scheduleAtFixedRate(TimerTask, 1000 * 10 , 2500);
 	  }
 	
 
@@ -62,6 +63,7 @@ public class PingServers {
 		if(pingMessage.getResultResponse().trim().equalsIgnoreCase("noResponse")){
 			  if(server1info.isLeader()){
 				  new BullyAlgorithm(processID, allServers ,thisServer );
+				  System.out.println("PingServers, BullyAlgorithm " +  processID);
 			  }
 			  	server1info.setStillWorking(false);
 		}
@@ -80,6 +82,7 @@ public class PingServers {
 		if(pingMessage.getResultResponse().trim().equalsIgnoreCase("noResponse")){
 			  if(server1info.isLeader()){
 				  new BullyAlgorithm(processID , allServers , thisServer ); 
+				  System.out.println("PingServers, BullyAlgorithm " +  processID);
 			  }
 			  server2info.setStillWorking(false);
 		}
@@ -88,6 +91,7 @@ public class PingServers {
 	
 	public void newLeader(int LeaderPortport){
 		
+		 System.out.println("PingServers, newLeader " +  processID);
 		if(server1info.getPort() == LeaderPortport){
 			server1info.setLeader(true);
 		}else if(server2info.getPort() == LeaderPortport){

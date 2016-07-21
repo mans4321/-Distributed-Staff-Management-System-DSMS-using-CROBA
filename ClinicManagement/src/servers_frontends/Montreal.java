@@ -62,23 +62,26 @@ public class Montreal implements ServerOperations {
 	   		 server2 =  serversInfo.getServer3();
 	   		 listenOnPort = serversInfo.getServer1().getPort();
 	   		 front1Port = serversInfo.getFrontEnd().getPort();
+	   		 break;
    	 	case 2 :
 	   		 server1 = serversInfo.getServer1();
 	   		 server2 =  serversInfo.getServer3();
 	   		 listenOnPort = serversInfo.getServer2().getPort();
 	   		 front1Port = serversInfo.getServer1().getPort();
+	   		break;
    	 	case 3 :
 	   		 server1 = serversInfo.getServer1();
 	   		 server2 =  serversInfo.getServer2();
 	   		 listenOnPort = serversInfo.getServer3().getPort();
 	   		 front1Port = serversInfo.getServer1().getPort();
+	   		break;
    	 }
    	 
    	 	sendMessage = new MessageTransport(server1.getPort(), 
    	 										server2.getPort());
    	 	pingServers = new PingServers(server1, server2 , serversInfo , this, processID);
-   	 	messageCenter = new MessagesCenter(manager, front1Port,
-   	 											listenOnPort, this, processID, serversInfo  );
+   	 	messageCenter = new MessagesCenter(manager, listenOnPort , front1Port,
+   	 											 this, processID, serversInfo  );
     }
     
     public String createDRecord (
@@ -137,18 +140,19 @@ public class Montreal implements ServerOperations {
     public String getRecordCount (String managerID, int type, int sequenceNum) {
     	Message message = new Message(4, sequenceNum, managerID, type );
     	sendMessage.sendTo(message);
+
     	final ExecutorService service;
+        final Future<Integer>  DDO;
         final Future<Integer>  LVL;
-        final Future<Integer>  MTL;
-        Integer LvLCount = -1 ;
-        Integer MTLcount = -1 ;
+        Integer DDOCount = -1;
+        Integer LVLCount = -1;
         service = Executors.newFixedThreadPool(2); 
         int localCount = database.getRecordCounts();
+        DDO = service.submit(new UDPClient(9997));
         LVL = service.submit(new UDPClient(9999));
-        MTL = service.submit(new UDPClient(9998));
         try {
-			LvLCount = LVL.get();
-			MTLcount = MTL.get();
+        	DDOCount = DDO.get();
+			LVLCount = LVL.get();
 		} catch (InterruptedException | ExecutionException e) {
 	    	if(service != null)
 	    	service.shutdown();
@@ -157,7 +161,7 @@ public class Montreal implements ServerOperations {
 	    	service.shutdown();
 		}
         
-        String allCounts = "DDO: " + localCount + ", LVL: " + LvLCount + ", MTL: " + MTLcount;
+        String allCounts = "MTL: " + localCount + ", DDO: " + DDOCount + ", LVL: " + LVLCount;
         return allCounts;
     }
     
@@ -181,10 +185,10 @@ public class Montreal implements ServerOperations {
 	
 	private  void startUdpForLeaderServer() 
 	{
-		UDPServerCount udp = new UDPServerCount(9997, database);
-	    udp.start();      
-	    TowPhaseProtocolServer transferedRecord = new TowPhaseProtocolServer(8000,database);
-	    transferedRecord.start();
+        UDPServerCount udp = new UDPServerCount(9998, database);
+        udp.start();
+        TowPhaseProtocolServer transferThread = new TowPhaseProtocolServer(10000,database);
+        transferThread.start();
 	}
 	
 	public void leaderChanged(boolean manager , int port){

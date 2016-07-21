@@ -117,7 +117,7 @@ public class LavalFrontEnd extends RemotInterfacePOA {
 	       		PrintWriter file = new PrintWriter("Laval.txt");
 	       		file.println(ior);
 	       		file.close();
-           		System.out.println("LVL clinic running");
+           		System.out.println("LVL  forntEnd clinic running");
            		orb.run();
     	    		}catch(Exception e){
     	    			e.printStackTrace(System.out);	

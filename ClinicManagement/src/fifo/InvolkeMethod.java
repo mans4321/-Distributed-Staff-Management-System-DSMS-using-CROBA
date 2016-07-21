@@ -21,6 +21,7 @@ public class InvolkeMethod {
 		 		result = server.createDRecord(message.getManagerID(), message.getFirstName(), 
 		 	    		 message.getLastName(), message.getAddress(), message.getPhone(), 
 		 	    		 message.getSpecialization(), message.getLocation(), message.getSequenceNum());
+		 		System.out.println("ApplyOperationToManager  "  + message.getSequenceNum() );
 		 		message.setResponse(result);
 		 		sendResult(message);
 		 		
@@ -62,6 +63,8 @@ public class InvolkeMethod {
 		 	case 1:
 		 		result = server.getDatabase().addRecord(message.getRecord());
 		 		message.setResponse(result);
+		 		System.out.println("ApplyOperationToBackup  "  + message.getResponse()  + message.getSequenceNum()  );
+		 		
 		 		sendResult(message);
 		 		
 		 		break;
@@ -90,6 +93,7 @@ public class InvolkeMethod {
 
 
    private void sendResult(Message message){
+	   System.out.println("sendResult  "  + message.getResponse()  + message.getSequenceNum()  );
 	   new ClientOperationMessage(message).start();
    }
 	 

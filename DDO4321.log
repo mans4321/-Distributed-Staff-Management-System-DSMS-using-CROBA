@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T17:39:37</date>
+  <millis>1469137177697</millis>
+  <sequence>0</sequence>
+  <logger>DDO4321</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>message: noResponse</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T17:54:50</date>
+  <millis>1469138090863</millis>
+  <sequence>0</sequence>
+  <logger>DDO4321</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>message: noResponse</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T18:03:19</date>
+  <millis>1469138599280</millis>
+  <sequence>0</sequence>
+  <logger>DDO4321</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>message: noResponse</message>
+</record>

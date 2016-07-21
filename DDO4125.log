@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T17:45:20</date>
+  <millis>1469137520664</millis>
+  <sequence>0</sequence>
+  <logger>DDO4125</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>message: noResponse</message>
+</record>
