@@ -42,7 +42,6 @@ public class ServerOperationMessage extends Thread{
 		         byte[] incomingData = new byte[1024];
 		         while (true)
 		         {
-		        	 System.out.println("waiting for messages");
 		             DatagramPacket incomingPacket = new DatagramPacket(incomingData, incomingData.length);
 		             socket.receive(incomingPacket);
 		             byte[] data = incomingPacket.getData();

@@ -12,3 +12,136 @@
   <thread>13</thread>
   <message>SUCCESS: New Doctor Created.</message>
 </record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T19:37:16</date>
+  <millis>1469144236980</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>14</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-07-21T19:37:25</date>
+  <millis>1469144245819</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>14</thread>
+  <message>SUCCESS: New nurse Created.ID :NR00001</message>
+</record>
+<record>
+  <date>2016-07-21T19:37:35</date>
+  <millis>1469144255268</millis>
+  <sequence>2</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>14</thread>
+  <message>SUCCESS: Record has update</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T19:46:40</date>
+  <millis>1469144800844</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>14</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-07-21T19:46:45</date>
+  <millis>1469144805420</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>14</thread>
+  <message>SUCCESS: New nurse Created.ID :NR00001</message>
+</record>
+<record>
+  <date>2016-07-21T19:46:51</date>
+  <millis>1469144811955</millis>
+  <sequence>2</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>14</thread>
+  <message>SUCCESS: Record has update</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T19:53:29</date>
+  <millis>1469145209572</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>14</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-07-21T19:53:34</date>
+  <millis>1469145214950</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>14</thread>
+  <message>SUCCESS: New nurse Created.ID :NR00001</message>
+</record>
+<record>
+  <date>2016-07-21T19:53:50</date>
+  <millis>1469145230838</millis>
+  <sequence>2</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>14</thread>
+  <message>SUCCESS: Record has update</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T20:08:43</date>
+  <millis>1469146123263</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>14</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-07-21T20:08:45</date>
+  <millis>1469146125586</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>14</thread>
+  <message>SUCCESS: New nurse Created.ID :NR00001</message>
+</record>

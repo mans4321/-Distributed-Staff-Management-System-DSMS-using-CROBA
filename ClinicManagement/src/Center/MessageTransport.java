@@ -82,6 +82,7 @@ public class MessageTransport {
 	
 	private void sendToBackup1(Message message){
 		SendingOperationMessage backup1 = new SendingOperationMessage(backupPort1, message);
+		backup1.setTimeOut(1000);
 		backup1.start();
 		try {
 			backup1.join();
@@ -98,6 +99,7 @@ public class MessageTransport {
 	private void sendToBackup2(Message message){
 		
 		SendingOperationMessage backup2 = new SendingOperationMessage(backupPort2, message);
+		backup2.setTimeOut(1000);
 		backup2.start();
 		try {
 			backup2.join();

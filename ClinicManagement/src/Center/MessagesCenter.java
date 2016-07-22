@@ -35,7 +35,7 @@ public class MessagesCenter {
 		   if(message.isPingSystem()){
 			   handle(message);
 		   }else{
-			   System.out.println("MessagesCenter + fifo "   +  processID);
+			   System.out.println("MessagesCenter + processID "   +  processID);
 			   fifo.recieivefifo(message);
 		   }
 	   }

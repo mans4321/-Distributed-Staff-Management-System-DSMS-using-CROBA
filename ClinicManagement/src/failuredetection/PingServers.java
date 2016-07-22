@@ -36,7 +36,7 @@ public class PingServers {
 	    		checkServes();
 	    	}
 	    };
-	    timer.scheduleAtFixedRate(TimerTask, 1000 * 10 , 2500);
+	    timer.scheduleAtFixedRate(TimerTask, 1000 * 10 , 5000);
 	  }
 	
 
@@ -51,7 +51,9 @@ public class PingServers {
 	}
 	
 	private void checkServeOne(){
-		SendingOperationMessage pingMessage = new SendingOperationMessage(server1info.getPort(), new Message(false));
+		SendingOperationMessage pingMessage = new SendingOperationMessage(server1info.getPort(), 
+																			new Message(false));
+		pingMessage.setTimeOut(1000);
 		pingMessage.start();
 		
 		try {
@@ -71,6 +73,7 @@ public class PingServers {
 	
 	private void checkServerTwo(){
 		SendingOperationMessage pingMessage = new SendingOperationMessage(server2info.getPort(),new Message(false));
+		pingMessage.setTimeOut(1000);
 		pingMessage.start();
 		
 		try {

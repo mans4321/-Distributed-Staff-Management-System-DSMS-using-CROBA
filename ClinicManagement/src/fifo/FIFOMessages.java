@@ -27,12 +27,9 @@ public class FIFOMessages {
 	
 	public void recieivefifo(Message message){
 		
-		System.out.println("recieive fifo  " + message.getSequenceNum()  + "   " + messageSeqnence);
 		if(message.isResend()){
-			System.out.println("message.isResend()" + message.getSequenceNum()  + "" + messageSeqnence);
 			sendLostMessages(message);
 		}else{
-			System.out.println("else " + message.getSequenceNum()  + "  " + messageSeqnence);
 			messagess.add(message);
 			deliver(message);
 		}
@@ -42,12 +39,10 @@ public class FIFOMessages {
 	   private void deliver(Message message)
 	   {
 		  
-		   System.out.println("deliver  " + message.getSequenceNum() + "    " + messageSeqnence);
 	      int expectedMessageSeqnence ;
 	      expectedMessageSeqnence = messageSeqnence; 
 	      if (expectedMessageSeqnence != message.getSequenceNum())
 	      {
-	    	  System.out.println("requestLostMessage" + message.getSequenceNum() + "" + messageSeqnence);
 	    	  requestLostMessage(message , expectedMessageSeqnence);
 	      }
 	      	handleMessageBySequence();
@@ -55,14 +50,12 @@ public class FIFOMessages {
 	   
 	   private void handleMessageBySequence()
 	   {
-		   System.out.println("handleMessageBySequence  " + messageSeqnence);
 	      boolean arrived = false;
 	      ArrayList<Message> copy =  messagess;
 	      for(int i =0 ; i< copy.size(); i ++){
 	    	  Message message = copy.get(i);
 	          if (message.getSequenceNum() ==  messageSeqnence)
 	          {
-	        	  System.out.println("deliver" + messageSeqnence);
 	         	  dealwithMessage(message);
 	         	  messageSeqnence = messageSeqnence + 1;
 	         	   arrived = true;

@@ -24,6 +24,7 @@ public class SendingOperationMessage extends Thread {
 	public SendingOperationMessage(int port , Message message){
 		this.port =port;
 		this.message = message;
+		this.timeOut = 3000;
 		
 	}
 	
@@ -45,7 +46,7 @@ public class SendingOperationMessage extends Thread {
         os.reset();
         
         
-        socket.setSoTimeout(2000);
+        socket.setSoTimeout(timeOut);
         byte[] incomingResultData = new byte[1024];
         DatagramPacket incomingResultPacket = new DatagramPacket(incomingResultData, incomingResultData.length);
         socket.receive(incomingResultPacket);
@@ -61,6 +62,11 @@ public class SendingOperationMessage extends Thread {
         	e.printStackTrace();
         }
 		
+	}
+
+
+	public void setTimeOut(int timeOut) {
+		this.timeOut = timeOut;
 	}
 
 
