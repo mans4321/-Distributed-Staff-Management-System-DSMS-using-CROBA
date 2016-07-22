@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T19:41:58</date>
+  <millis>1469144518202</millis>
+  <sequence>0</sequence>
+  <logger>Dollard3</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>12</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T19:56:23</date>
+  <millis>1469145383120</millis>
+  <sequence>0</sequence>
+  <logger>Dollard3</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>12</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-21T20:11:12</date>
+  <millis>1469146272677</millis>
+  <sequence>0</sequence>
+  <logger>Dollard3</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>18</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-07-21T20:11:24</date>
+  <millis>1469146284385</millis>
+  <sequence>1</sequence>
+  <logger>Dollard3</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>18</thread>
+  <message>SUCCESS: New nurse Created.ID :NR00001</message>
+</record>

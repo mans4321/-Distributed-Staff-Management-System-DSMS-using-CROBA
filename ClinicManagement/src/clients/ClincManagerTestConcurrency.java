@@ -5,8 +5,8 @@ import java.io.FileReader;
 
 import org.omg.CORBA.ORB;
 
-import RemotInterfaceApp.RemotInterface;
-import RemotInterfaceApp.RemotInterfaceHelper;
+import corbafiles.RemotInterface;
+import corbafiles.RemotInterfaceHelper;
 
 public class ClincManagerTestConcurrency {
 	

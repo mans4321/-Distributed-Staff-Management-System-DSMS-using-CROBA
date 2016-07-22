@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 import org.omg.CORBA.ORB;
 
-import RemotInterfaceApp.RemotInterface;
-import RemotInterfaceApp.RemotInterfaceHelper;
+import corbafiles.RemotInterface;
+import corbafiles.RemotInterfaceHelper;
 import utilities.RmiLogger;
 
 public class ClinicManager {

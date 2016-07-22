@@ -1,6 +1,6 @@
 package clients;
 
-import RemotInterfaceApp.RemotInterface;
+import corbafiles.RemotInterface;
 
 public class TestThreds {
 
