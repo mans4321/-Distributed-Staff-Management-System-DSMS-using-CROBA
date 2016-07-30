@@ -54,35 +54,31 @@ public class Dollard implements ServerOperations {
 	        
 	    	 switch(processID){
 	    	 
-	    	 case 1 :
-	    		 server1 = getInfo.getServer2();
-	    		 server2 =  getInfo.getServer3();
-	    		 listenOnPort = getInfo.getServer1().getPort();
-	    		 front1Port = getInfo.getFrontEnd().getPort();
-	    		 break;
-	    	 case 2 :
-	    		 server1 = getInfo.getServer1();
-	    		 server2 =  getInfo.getServer3();
-	    		 listenOnPort = getInfo.getServer2().getPort();
-	    		 front1Port = getInfo.getServer1().getPort();
-	    		 break;
-	    	 case 3 :
-	    		 server1 = getInfo.getServer1();
-	    		 server2 =  getInfo.getServer2();
-	    		 listenOnPort = getInfo.getServer3().getPort();
-	    		 front1Port = getInfo.getServer1().getPort();
-	    		 break;
+    	    	 case 1 :
+    	    		 server1 = getInfo.getServer2();
+    	    		 server2 =  getInfo.getServer3();
+    	    		 listenOnPort = getInfo.getServer1().getPort();
+    	    		 front1Port = getInfo.getFrontEnd().getPort();
+    	    		 break;
+    	    	 case 2 :
+    	    		 server1 = getInfo.getServer1();
+    	    		 server2 =  getInfo.getServer3();
+    	    		 listenOnPort = getInfo.getServer2().getPort();
+    	    		 front1Port = getInfo.getServer1().getPort();
+    	    		 break;
+    	    	 case 3 :
+    	    		 server1 = getInfo.getServer1();
+    	    		 server2 =  getInfo.getServer2();
+    	    		 listenOnPort = getInfo.getServer3().getPort();
+    	    		 front1Port = getInfo.getServer1().getPort();
+    	    		 break;
 	    	 }
 	    	 
-		        sendMessage = new MessageTransport(server1.getPort(), 
-		        									server2.getPort());
+		        sendMessage = new MessageTransport(server1.getPort(), server2.getPort());
 		        
-		        pingServers = new PingServers(server1 , server2 , 
-		        								getInfo ,
-		        								this, processID);
+		        pingServers = new PingServers(server1 , server2 , getInfo , this, processID);
 		        
-		        messageCenter = new MessagesCenter(manager, listenOnPort , front1Port,
-		        									 this, processID, getInfo);
+		        messageCenter = new MessagesCenter(manager, listenOnPort , front1Port, this, processID, getInfo);
 	    }
 	    
 		public String createDRecord (
@@ -96,14 +92,15 @@ public class Dollard implements ServerOperations {
 			    int sequenceNum
 		)  {
 		    Record record;
-		    System.out.println("leader creating a doctor record "   );
+		    System.out.println( serverName + " creating a doctor record");
 		    record = database.createDRecord(firstName, lastName, address, phone, specialization, location);
 		    logger.log(record);
-		      	if(record.isSuccessful()){
-		      		Message message = new Message(1, sequenceNum, managerID , record);
-		      		sendMessage.sendTo(message);
-		      	}
-		      	return record.getStatusMessage();
+		    
+	      	if(record.isSuccessful()){
+	      		Message message = new Message(1, sequenceNum, managerID , record);
+	      		sendMessage.sendTo(message);
+	      	}
+	      	return record.getStatusMessage();
 		}
 		
 		    
@@ -213,6 +210,6 @@ public class Dollard implements ServerOperations {
 //----------------------------------------------(RunCROBAobject)-------------------------------------------------------------------------
 
 		public static void main(String [] args){
-			new Dollard(1);
+			new Dollard(Integer.parseInt(args[0]));
 		}
 }
