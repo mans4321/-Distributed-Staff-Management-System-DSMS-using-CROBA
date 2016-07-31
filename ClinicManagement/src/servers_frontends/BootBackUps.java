@@ -11,8 +11,8 @@ public class BootBackUps {
 	
 	public BootBackUps(){
 		new StartDDOThread().start();
-		new StartLVLThread().start();
-		new StartMTLThread().start();
+//		new StartLVLThread().start();
+//		new StartMTLThread().start();
 	}
 	
 	private class StartDDOThread extends Thread {

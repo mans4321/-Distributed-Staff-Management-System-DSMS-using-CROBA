@@ -42,17 +42,21 @@ public class PingServers {
 
 	
 	private void checkServes(){
-		if(server1info.isStillWorking()){
-			checkServeOne();
-		}
+		
 		if(server2info.isStillWorking()){
 			checkServerTwo();
 		}
+		
+		if(server1info.isStillWorking()){
+			checkServeOne();
+		}
+
 	}
 	
 	private void checkServeOne(){
 		SendingOperationMessage pingMessage = new SendingOperationMessage(server1info.getPort(), 
 																			new Message(false));
+		
 		pingMessage.setTimeOut(1000);
 		pingMessage.start();
 		
@@ -63,6 +67,7 @@ public class PingServers {
 		}
 		
 		if(pingMessage.getResultResponse().trim().equalsIgnoreCase("noResponse")){
+			 System.out.println("process is not responig  " + server1info.getprocessID());
 			  if(server1info.isLeader()){
 				  new BullyAlgorithm(processID, allServers ,thisServer );
 				  System.out.println("PingServers, BullyAlgorithm " +  processID);
@@ -83,7 +88,8 @@ public class PingServers {
 		}
 		
 		if(pingMessage.getResultResponse().trim().equalsIgnoreCase("noResponse")){
-			  if(server1info.isLeader()){
+			 System.out.println("process is not responig  " + server2info.getprocessID());
+			  if(server2info.isLeader()){
 				  new BullyAlgorithm(processID , allServers , thisServer ); 
 				  System.out.println("PingServers, BullyAlgorithm " +  processID);
 			  }

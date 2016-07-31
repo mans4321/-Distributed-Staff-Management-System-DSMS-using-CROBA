@@ -28,6 +28,7 @@ public class FIFOMessages {
 	public void recieivefifo(Message message){
 		
 		if(message.isResend()){
+			
 			sendLostMessages(message);
 		}else{
 			messagess.add(message);
@@ -70,12 +71,11 @@ public class FIFOMessages {
 	   
 	   public void dealwithMessage(Message message) {
 		   if(manager){
-			    involkeMethod.ApplyOperationToManager(server, message);
-			    System.out.println("dealwithMessage  ApplyOperationToManager " + messageSeqnence);
-			 
+			   System.out.println("dealwithMessage  ApplyOperationToManager " + messageSeqnence + "   firstName  " + message.getFirstName());
+			    involkeMethod.ApplyOperationToManager(server, message);  
 		   }else{
-			   involkeMethod.ApplyOperationToBackup(server, message);
 			   System.out.println("dealwithMessage  ApplyOperationToBackup " + messageSeqnence);
+			   involkeMethod.ApplyOperationToBackup(server, message);
 		   }
 		  
 	   }
@@ -91,6 +91,7 @@ public class FIFOMessages {
 		         {
 		        	 Message requestMessage = new Message(0 , missingSeqNum );
 		        	 requestMessage.setResend(true);
+		        	 System.out.println("sending lost message request  missing message sequnce is " + messageSequense  + "to port number " +serverPort );
 		        	 requestMessage.setSenderPort(serverPort);
 		        	 new ClientOperationMessage(message).start();
 		         }

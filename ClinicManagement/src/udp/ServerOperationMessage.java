@@ -49,14 +49,31 @@ public class ServerOperationMessage extends Thread{
 		             is = new ObjectInputStream(in);
 		             Message message = (Message) is.readObject();
 		             message.setSenderPort(incomingPacket.getPort());
-		             if(! isFrontEnd ){
-		            	 messageCenter.recieive(message); 
-		             }else{
-		            	 sendMessage.recieive(message);
-		             }
+		             new SpeedingThread(message).start();
+//		             if(! isFrontEnd ){
+//		            	 messageCenter.recieive(message); 
+//		             }else{
+//		            	 sendMessage.recieive(message);
+//		             }
 		         }
 		      }catch(Exception e){
 		    	  e.printStackTrace(System.out);
 		      	}
 		}
+	
+	private class SpeedingThread extends Thread{
+		
+		Message message;
+		public SpeedingThread(Message message){
+			this.message = message;
+		}
+		
+		public void run(){
+            if(! isFrontEnd ){
+           	 messageCenter.recieive(message); 
+            }else{
+           	 sendMessage.recieive(message);
+            }
+		}
+	}
 }
