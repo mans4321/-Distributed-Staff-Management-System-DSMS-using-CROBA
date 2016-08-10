@@ -36,7 +36,7 @@ public class PingServers {
 	    		checkServes();
 	    	}
 	    };
-	    timer.scheduleAtFixedRate(TimerTask, 1000 * 10 , 5000);
+	    timer.scheduleAtFixedRate(TimerTask, 1000 * 10 , 4000);
 	  }
 	
 

@@ -136,14 +136,8 @@ public class ClinicManager {
                 showMenu();
                 break;
             case 6:
-            	System.out.println(server.getRecordCount(managerId,1));
-            	System.out.println(result);
-            	result = server.createDRecord(managerId, "Mansour", "saad", "321Murray", "05519340", "nothing", "DOD");
-                System.out.println(result);  
-                logger.log(result);
                 result = server.transferRecord(managerId, "DR00001", "LVL");
                 System.out.println("transfer result :  "+ result );
-                result = server.getRecordCount(managerId, 1);
                 System.out.println(""+result);
                 break;
             case 7:

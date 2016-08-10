@@ -135,116 +135,119 @@ public class RecordManager {
         return counter;
     }
     
+    ///-----------------------------(transferRecord)----------------------------------------------
     
-  ///-----------------------------(transferRecord)----------------------------------------------
-   
-   public boolean transferRecord(String managerId ,String recordId, String remoteClinicServerName){
-	 
-	    Record record = findRecordToTransfer(recordId);
-	    Record transferedRecord = record;
-	    boolean respoens;
-	   if(record != null){
-		   synchronized(record){   
-	   switch(remoteClinicServerName.toUpperCase().trim()){
-	   	case"DDO":
-	   		TwoPhaseProtocolClient thread	=new TwoPhaseProtocolClient(8000,transferedRecord, this );
-	   		thread.start();
-		try {
-			thread.join();
-			respoens = thread.isResult();
-		} catch (InterruptedException e) {
-			respoens = false;
-		}
-	   	  break;
-	   	case"MTL":	
-	   		TwoPhaseProtocolClient thread2	=new TwoPhaseProtocolClient(10000,transferedRecord, this );
-	   		thread2.start();
-		try {
-			thread2.join();
-			respoens = thread2.isResult();
-		} catch (InterruptedException e) {
-			respoens = false;
-		}
-	   	  break;
-	   	case"LVL": 
-	   		TwoPhaseProtocolClient thread3	=new TwoPhaseProtocolClient(9000,transferedRecord, this );
-	   		thread3.start();
-		try {
-			thread3.join();
-			respoens = thread3.isResult();
-		} catch (InterruptedException e) {
-			respoens = false;
-		}
-	   	  break;
-	   	  default :
-	   		  return false; 
-	   }
-		   }
-		   
-	   }else{
-	    respoens = false;
-	   }
-	   return respoens;
-   }
-   
-    public boolean deleteTranferedRecord (Record record, DealWithUndeletedRecord backupRecord){
-    	String recordId = record.getId();
-        if (lastNames.containsKey(recordId)) {
-        	synchronized(records.get(lastNames.get(recordId))){
-	            ArrayList<Record> possibleRecords = records.get(lastNames.get(recordId));
-	            for (int index =0 ; index < possibleRecords.size();index++) {
-	                if (possibleRecords.get(index).getId().equals(recordId)) {
-	                	possibleRecords.remove(index);
-	                	records.put(lastNames.get(recordId), possibleRecords);
-	                	lastNames.remove(lastNames.get(recordId));
-	                	return true;
-	                }
-               	}
-            }
-        }
-        record.setStatusMessage("could't delet record");
-        backupRecord.setRecord(record);
-        backupRecord.doSaveAsString();
-        return false;
+    public boolean transferRecord(String managerId ,String recordId, String remoteClinicServerName){
+ 	 
+ 	    Record record = findRecordToTransfer(recordId);
+// 	    Record transferedRecord = record;
+ 	    boolean respoens;
+ 	   if(record != null){
+ 		   System.out.println(remoteClinicServerName);
+ 	   switch(remoteClinicServerName.toUpperCase().trim()){
+ 	   	case"DDO":
+ 	   		TwoPhaseProtocolClient thread	=new TwoPhaseProtocolClient(8000,record, this );
+ 	   		thread.start();
+ 		try {
+ 			thread.join();
+ 			respoens = thread.isResult();
+ 		} catch (InterruptedException e) {
+ 			respoens = false;
+ 		}
+ 	   	  break;
+ 	   	case"MTL":	
+ 	   		TwoPhaseProtocolClient thread2	=new TwoPhaseProtocolClient(10000,record, this );
+ 	   		thread2.start();
+ 		try {
+ 			thread2.join();
+ 			respoens = thread2.isResult();
+ 		} catch (InterruptedException e) {
+ 			respoens = false;
+ 		}
+ 	   	  break;
+ 	   	case"LVL": 
+ 	   		TwoPhaseProtocolClient thread3	=new TwoPhaseProtocolClient(9000,record, this );
+ 	   		thread3.start();
+ 		try {
+ 			thread3.join();
+ 			respoens = thread3.isResult();
+ 		} catch (InterruptedException e) {
+ 			respoens = false;
+ 		}
+ 	   	  break;
+ 	   	  default :
+ 	   		  return false; 
+ 	   }
+
+ 	   }else{
+ 	    respoens = false;
+ 		}
+ 	   
+ 	   return respoens;
     }
     
-    public Record findRecordToTransfer(String recordId){
-    	final ArrayList<Record> possibleRecords ;
-    	 if (lastNames.containsKey(recordId)) {
-              possibleRecords = records.get(lastNames.get(recordId));
-             for (int i =0 ; i < possibleRecords.size(); i++ ) {
-                 if (possibleRecords.get(i).getId().equals(recordId)) {
-                     return possibleRecords.get(i);
-                 }
+     public String deleteTranferedRecord (Record record, DealWithUndeletedRecord backupRecord){
+     	String recordId = record.getId();
+         if (records.containsKey(record.getLastNameIndex())) {
+         	synchronized(records.get(record.getLastNameIndex())){
+ 	            ArrayList<Record> possibleRecords = records.get(record.getLastNameIndex());
+ 	            for (int index =0 ; index < possibleRecords.size();index++) {
+ 	                if (possibleRecords.get(index).getId().equals(recordId)) {
+ 	                		possibleRecords.remove(index);
+ 	                		records.put(record.getLastNameIndex(), possibleRecords);
+ 	                		lastNames.remove(recordId);
+ 	                		System.out.println(" delet record" + recordId);
+ 	                		return "done";
+ 	                }
+                	}
              }
          }
-         return null;
-    }
-   
+         record.setStatusMessage("could't delet record");
+         System.out.println("could't delet record" + recordId);
+         backupRecord.setRecord(record);
+         backupRecord.doSaveAsString();
+         return "could not delete record";
+     }
+     
+     public Record findRecordToTransfer(String recordId){
+     	final ArrayList<Record> possibleRecords ;
+     	 if (lastNames.containsKey(recordId)) {
+               possibleRecords = records.get(lastNames.get(recordId));
+               for (int i =0 ; i < possibleRecords.size(); i++ ) {
+                  if (possibleRecords.get(i).getId().equals(recordId)) {
+                      return possibleRecords.get(i);
+                  }
+              }
+          }
+          return null;
+     }
     
-    
-    public boolean addTransferedRecord(Record record)  {
-    	String nextId;
-    	String kind = record.getId().substring(0, 2);
-    	if(kind.equalsIgnoreCase("DR")){
-			try {
-				nextId = getNextId("doctor");
-			} catch (Exception e) {
-				return false;
-			}
-			
-    	}else{
-    	    try {
-				nextId = getNextId("nurse");
-			} catch (Exception e) {
-				return false;
-			}
-    	    
-    	}
-		record.setId(nextId);
-        Character index = record.getLastNameIndex();
-        return(addToRecord(record, index));
-    }
+     
+     
+     public boolean addTransferedRecord(Record record)  {
+     	String nextId;
+     	String kind = record.getId().substring(0, 2);
+     	if(kind.equalsIgnoreCase("DR")){
+ 			try {
+ 				nextId = getNextId("doctor");
+ 			} catch (Exception e) {
+ 				return false;
+ 			}
+ 			
+     	}else{
+     	    try {
+ 				nextId = getNextId("nurse");
+ 			} catch (Exception e) {
+ 				return false;
+ 			}
+     	    
+     	}
+ 		record.setId(nextId);
+         Character index = record.getLastNameIndex();
+         return(addToRecord(record, index));
+     }
+     
+     //-----------------------------------------------------------------
     
     
     
@@ -257,23 +260,6 @@ public class RecordManager {
         }
         	
     }
-    
-    public String deleteRecord (String recordId){
-        if (lastNames.containsKey(recordId)) {
-        	synchronized(records.get(lastNames.get(recordId))){
-	            ArrayList<Record> possibleRecords = records.get(lastNames.get(recordId));
-	            for (int index =0 ; index < possibleRecords.size();index++) {
-	                if (possibleRecords.get(index).getId().equals(recordId)) {
-	                	possibleRecords.remove(index);
-	                	records.put(lastNames.get(recordId), possibleRecords);
-	                	lastNames.remove(lastNames.get(recordId));
-	                	return "done";
-	                }
-               	}
-            }
-        }
 
-        return "notDone";
-    }
   }
 

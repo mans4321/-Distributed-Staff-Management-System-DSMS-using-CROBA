@@ -1,8 +1,10 @@
 package fifo;
 
 import Center.ServerOperations;
+import servers.records.Record;
 import Center.Message;
 import udp.ClientOperationMessage;
+import utilities.DealWithUndeletedRecord;
 
 public class InvolkeMethod {
 
@@ -46,7 +48,7 @@ public class InvolkeMethod {
 		 		break;
 		 	case 5 :
 		 	    result = server.transferRecord(message.getManagerID(), message.getRecordID(),
-		 	    		 message.getLocation(), message.getSequenceNum());
+		 	    		 message.getRemoteClinicServerName(), message.getSequenceNum());
 		 	    message.setResponse(result);
 		 	    sendResult(message);
 		 	    break;
@@ -84,7 +86,7 @@ public class InvolkeMethod {
 		 		sendResult(message);
 		 		break;
 		 	case 5 :
-		 	    result = server.getDatabase().deleteRecord(message.getRecordID());
+		 	    result = server.getDatabase().deleteTranferedRecord (server.getDatabase().findRecordToTransfer(message.getRecordID()), new DealWithUndeletedRecord(server.getDatabase().findRecordToTransfer(message.getRecordID())) );
 		 	    message.setResponse(result);
 		 	    sendResult(message);
 		 	    break;

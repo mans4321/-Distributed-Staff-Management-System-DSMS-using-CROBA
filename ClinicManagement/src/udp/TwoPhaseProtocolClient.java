@@ -37,27 +37,12 @@ public class TwoPhaseProtocolClient extends Thread {
 				socket = new DatagramSocket();
 				InetAddress IPAddress = InetAddress.getByName("localhost");
 				
-//---------------------------(vote stage)---------------------------------
-				
-         	 	byte[] sendCommitData = new byte[1024];
-         	 	sendCommitData = "voteRequest".getBytes();
-         	 	DatagramPacket sendCommitPacket = new DatagramPacket(sendCommitData, sendCommitData.length,IPAddress,port);
-	          	socket.send(sendCommitPacket);
-				
-	          	socket.setSoTimeout(1000);
-	            byte[] incomingData = new byte[1024];
-	            DatagramPacket incomingVote = new DatagramPacket(incomingData, incomingData.length);
-	            socket.receive(incomingVote);
-	            String response = new String(incomingVote.getData());
-	            if(response.trim().equalsIgnoreCase("approved")){
-	            	
-	            	//---------------------------(Commit stage)---------------------------------
 	            	ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		            ObjectOutputStream os = new ObjectOutputStream(outputStream);
 		            os.writeObject(record);
 		            os.flush();
 		            byte[] data = outputStream.toByteArray();
-		            DatagramPacket sendObjectToCommit = new DatagramPacket(data, data.length, incomingVote.getAddress(), incomingVote.getPort());
+		            DatagramPacket sendObjectToCommit = new DatagramPacket(data, data.length, IPAddress, port);
 		            socket.send(sendObjectToCommit);
 		            outputStream.reset();
 		            os.reset();
@@ -70,23 +55,20 @@ public class TwoPhaseProtocolClient extends Thread {
 		            socket.receive(incomingResultPacket);
 		            String resultResponse = new String(incomingResultPacket.getData());
 		            System.out.println(resultResponse);
-		            if(resultResponse.trim().equalsIgnoreCase("done")){
+		            if(resultResponse.trim().equalsIgnoreCase("notDone")){
+		            	 socket.close(); 
+		            }else{
 		            	result = true;
 		            	database.deleteTranferedRecord(record, backupRecord ); 
+		            	 socket.close(); 
 		            }
-		            	
-	            }
-	            socket.close();  
+
 			}catch(SocketTimeoutException  e){
-				 result = false;
-				if(status.trim().equalsIgnoreCase("send")){
-					result = true;
-					record.setStatusMessage("record has been sent but no response");
-					backupRecord.setRecord(record);
-					backupRecord.doSaveAsString();	
-					if(socket != null){
-						socket.close();
-					}
+				 record.setStatusMessage("record has been sent but no response");
+				 backupRecord.setRecord(record);
+				 backupRecord.doSaveAsString();	
+				if(socket != null){
+					socket.close();
 				}
 			} catch(Exception e){
 				if(socket != null){

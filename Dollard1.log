@@ -145,3 +145,585 @@
   <thread>14</thread>
   <message>SUCCESS: New nurse Created.ID :NR00001</message>
 </record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-29T20:15:49</date>
+  <millis>1469837749067</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-07-29T20:15:51</date>
+  <millis>1469837751106</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-29T20:22:45</date>
+  <millis>1469838165844</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-07-29T20:22:47</date>
+  <millis>1469838167878</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-29T20:25:58</date>
+  <millis>1469838358230</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-07-29T20:26:00</date>
+  <millis>1469838360265</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-29T20:34:23</date>
+  <millis>1469838863662</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-07-29T20:34:25</date>
+  <millis>1469838865696</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-29T20:43:36</date>
+  <millis>1469839416956</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-07-29T20:43:38</date>
+  <millis>1469839418990</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-07-29T21:40:35</date>
+  <millis>1469842835303</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>78</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-09T17:10:40</date>
+  <millis>1470777040552</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T17:10:42</date>
+  <millis>1470777042588</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-09T17:13:28</date>
+  <millis>1470777208326</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>58</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-09T22:29:09</date>
+  <millis>1470796149207</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>76</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:29:09</date>
+  <millis>1470796149933</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>80</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:29:11</date>
+  <millis>1470796151291</millis>
+  <sequence>2</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>86</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-09T22:31:29</date>
+  <millis>1470796289754</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>62</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:31:31</date>
+  <millis>1470796291178</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>68</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:31:55</date>
+  <millis>1470796315877</millis>
+  <sequence>2</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>120</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-09T22:37:38</date>
+  <millis>1470796658187</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>18</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:37:47</date>
+  <millis>1470796667195</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>30</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-09T22:39:24</date>
+  <millis>1470796764830</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>21</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:39:33</date>
+  <millis>1470796773981</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>29</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:39:51</date>
+  <millis>1470796791259</millis>
+  <sequence>2</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>31</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:40:04</date>
+  <millis>1470796804004</millis>
+  <sequence>3</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>41</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-09T22:43:56</date>
+  <millis>1470797036010</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>18</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:44:10</date>
+  <millis>1470797050533</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>30</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:44:10</date>
+  <millis>1470797050575</millis>
+  <sequence>2</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>32</thread>
+  <message>message: Record DR00001 has been transferd</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-09T22:45:25</date>
+  <millis>1470797125726</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>18</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:45:35</date>
+  <millis>1470797135257</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>22</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-09T22:46:54</date>
+  <millis>1470797214097</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>30</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:47:02</date>
+  <millis>1470797222715</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>48</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:47:17</date>
+  <millis>1470797237356</millis>
+  <sequence>2</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>86</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T22:47:17</date>
+  <millis>1470797237383</millis>
+  <sequence>3</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>90</thread>
+  <message>message: Record DR00001 has been transferd</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-09T23:43:33</date>
+  <millis>1470800613057</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>54</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T23:43:36</date>
+  <millis>1470800616229</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>64</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T23:43:48</date>
+  <millis>1470800628572</millis>
+  <sequence>2</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>98</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T23:43:48</date>
+  <millis>1470800628651</millis>
+  <sequence>3</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>102</thread>
+  <message>message: Record DR00001 has been transferd</message>
+</record>
+<record>
+  <date>2016-08-09T23:44:04</date>
+  <millis>1470800644081</millis>
+  <sequence>4</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>143</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-09T23:44:04</date>
+  <millis>1470800644081</millis>
+  <sequence>5</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>147</thread>
+  <message>message:  could't transfer record  DR00001</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-10T00:03:18</date>
+  <millis>1470801798704</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>30</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-10T00:03:21</date>
+  <millis>1470801801034</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>36</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-10T00:03:34</date>
+  <millis>1470801814099</millis>
+  <sequence>2</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>66</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2016-08-10T00:11:59</date>
+  <millis>1470802319387</millis>
+  <sequence>0</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>56</thread>
+  <message>SUCCESS: New Doctor Created.</message>
+</record>
+<record>
+  <date>2016-08-10T00:12:03</date>
+  <millis>1470802323462</millis>
+  <sequence>1</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>64</thread>
+  <message>SUCCESS: New nurse Created.ID :NR00001</message>
+</record>
+<record>
+  <date>2016-08-10T00:12:38</date>
+  <millis>1470802358194</millis>
+  <sequence>2</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>110</thread>
+  <message>message: Record DR00001 has been transferd</message>
+</record>
+<record>
+  <date>2016-08-10T00:12:53</date>
+  <millis>1470802373563</millis>
+  <sequence>3</sequence>
+  <logger>Dollard1</logger>
+  <level>INFO</level>
+  <class>utilities.RmiLogger</class>
+  <method>log</method>
+  <thread>135</thread>
+  <message>message:  could't transfer record  DR00001</message>
+</record>
